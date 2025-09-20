@@ -1,4 +1,4 @@
-/* Halloween Event Website Styles */
+/* Halloween Event Website Styles - Updated */
 
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -18,6 +18,8 @@
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.8);
     --text-muted: rgba(255, 255, 255, 0.6);
+    --whatsapp-green: #25d366;
+    --instagram-gradient: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
 }
 
 /* Light mode variables */
@@ -26,7 +28,7 @@ body.light-mode {
     --darker-bg: #ffffff;
     --shadow-black: #f0f0f0;
     --card-bg: rgba(255, 255, 255, 0.95);
-    --border-glow: rgba(139, 0, 0, 0.3);
+    --border-glow: rgba(255, 107, 53, 0.3);
     --text-primary: #8b0000;
     --text-secondary: rgba(139, 0, 0, 0.8);
     --text-muted: rgba(139, 0, 0, 0.6);
@@ -135,6 +137,31 @@ a, button, .clickable {
     z-index: -2;
 }
 
+/* Creepy images for light mode */
+.creepy-images {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.light-mode .creepy-images {
+    opacity: 1;
+}
+
+.creepy-img {
+    position: absolute;
+    font-size: 3rem;
+    color: var(--blood-red);
+    opacity: 0.6;
+    animation: float-creepy 6s ease-in-out infinite;
+}
+
 /* Moon - hidden in light mode */
 .moon {
     position: fixed;
@@ -241,24 +268,26 @@ body.light-mode .navbar {
     transform: scale(1.05);
 }
 
-/* Fixed Aikya Logo SVG */
+/* Circular JPG Logo (No background) */
 .logo-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    margin-right: 0.8rem;
-    background: linear-gradient(135deg, var(--primary-orange), var(--primary-purple));
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-orange);
+    width: 50px;                       /* container size */
+    height: 50px;
+    border-radius: 50%;                /* makes it a perfect circle */
+    overflow: hidden;                  /* crop the edges of the image */
+    display: inline-block;
+    margin-right: 0.8rem;              /* optional spacing */
+    padding: 0;                         /* no padding */
+    background: none;                  /* no background */
 }
 
-.logo-img svg {
+/* JPG inside the logo container */
+.logo-img img {
     width: 100%;
     height: 100%;
+    object-fit: cover;                 /* fills the circle, keeps aspect ratio */
+    display: block;
 }
+
 
 .logo-text {
     font-family: 'Creepster', cursive;
@@ -302,6 +331,48 @@ body.light-mode .navbar {
 .nav-links a:hover {
     color: var(--primary-orange);
     transform: translateY(-2px);
+}
+
+/* Navigation Controls */
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Sound Control in Navigation */
+.sound-control {
+    background: rgba(26, 26, 26, 0.95);
+    border: 2px solid var(--primary-purple);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--primary-orange);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+}
+
+body.light-mode .sound-control {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: var(--primary-orange);
+}
+
+.sound-control:hover {
+    background: var(--primary-purple);
+    color: white;
+    transform: scale(1.05);
+}
+
+body.light-mode .sound-control:hover {
+    background: var(--primary-orange);
+}
+
+.sound-icon {
+    font-size: 1.2rem;
 }
 
 .theme-toggle {
@@ -363,35 +434,7 @@ body.light-mode .navbar {
     font-weight: 400;
 }
 
-/* Sound Control */
-.sound-control {
-    position: absolute;
-    top: 6rem;
-    right: 2rem;
-    background: var(--card-bg);
-    border: 2px solid var(--primary-purple);
-    border-radius: 50px;
-    padding: 0.8rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--primary-orange);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(15px);
-}
-
-.sound-control:hover {
-    background: var(--primary-purple);
-    color: white;
-}
-
-.sound-icon {
-    font-size: 1.2rem;
-}
-
-/* Countdown Timer */
+/* Enhanced Countdown Timer */
 .countdown-container {
     background: var(--card-bg);
     border: 2px solid var(--primary-purple);
@@ -399,7 +442,22 @@ body.light-mode .navbar {
     padding: 2rem;
     margin: 2rem 0 3rem;
     backdrop-filter: blur(15px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.05), transparent);
+    animation: shimmer 3s infinite;
 }
 
 .countdown-title {
@@ -407,6 +465,7 @@ body.light-mode .navbar {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
     color: var(--primary-orange);
     margin-bottom: 1.5rem;
+    text-shadow: 0 0 10px var(--primary-orange);
 }
 
 .countdown-timer {
@@ -417,17 +476,45 @@ body.light-mode .navbar {
 }
 
 .time-unit {
+    position: relative;
     background: linear-gradient(135deg, var(--blood-red), var(--primary-purple));
     padding: 1.5rem 1rem;
     border-radius: 15px;
     min-width: 80px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease;
+    box-shadow: 
+        0 8px 25px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 107, 53, 0.3);
 }
 
 .time-unit:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+}
+
+.time-unit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-orange), var(--ghost-white), var(--primary-orange));
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.time-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+    animation: glow-pulse 3s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 .time-number {
@@ -436,6 +523,9 @@ body.light-mode .navbar {
     display: block;
     font-family: 'Poppins', sans-serif;
     color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 1;
 }
 
 .time-label {
@@ -445,6 +535,8 @@ body.light-mode .navbar {
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #ffffff;
+    position: relative;
+    z-index: 1;
 }
 
 /* CTA Buttons */
@@ -469,11 +561,29 @@ body.light-mode .navbar {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.cta-btn:hover::before {
+    left: 100%;
 }
 
 .cta-btn.primary {
     background: linear-gradient(135deg, var(--primary-orange), var(--blood-red));
     color: white;
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
 }
 
 .cta-btn.secondary {
@@ -492,7 +602,7 @@ body.light-mode .navbar {
     color: white;
 }
 
-/* Section reveal animations with improved transitions */
+/* Section reveal animations */
 .section {
     padding: 6rem 0;
     position: relative;
@@ -536,16 +646,23 @@ body.light-mode .navbar {
 
 .event-card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 2rem;
+    padding: 0;
     text-align: center;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     backdrop-filter: blur(15px);
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+    cursor: default;
     will-change: transform;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Light mode event card border */
+body.light-mode .event-card {
+    border: 2px solid var(--primary-orange);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
 }
 
 .event-card::before {
@@ -569,10 +686,43 @@ body.light-mode .navbar {
     border-color: var(--primary-orange);
 }
 
-.event-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    display: block;
+body.light-mode .event-card:hover {
+    box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+}
+
+/* Event Image */
+.event-img {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+}
+
+.event-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-img img {
+    transform: scale(1.1);
+}
+
+/* Event Content */
+.event-card > h3,
+.event-card > .event-details,
+.event-card > .event-btn {
+    padding: 0 2rem;
+}
+
+.event-card > h3 {
+    padding-top: 1.5rem;
+}
+
+.event-card > .event-btn {
+    padding: 0 2rem 2rem;
 }
 
 .event-title {
@@ -606,6 +756,7 @@ body.light-mode .navbar {
 }
 
 .event-btn {
+    display: block; /* Change from flex to block for better centering control */
     background: linear-gradient(135deg, var(--primary-orange), var(--blood-red));
     color: white;
     border: none;
@@ -613,13 +764,96 @@ body.light-mode .navbar {
     border-radius: 25px;
     font-weight: 600;
     transition: all 0.3s ease;
+    width: 90%;
+    max-width: 250px;
+    cursor: pointer;
+    position: absolute;
+    overflow: hidden;
+    margin: 0 auto 15px auto;
+    text-align: center; /* This will center the text */
+    line-height: normal; /* Reset line height */
+}
+
+
+.event-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.event-btn:hover::before {
+    left: 100%;
 }
 
 .event-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
 }
+
+/* Separator Section */
+.separator-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--shadow-black), var(--card-bg));
+    margin: 4rem 0;
+    border-top: 1px solid rgba(255, 107, 53, 0.2);
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.separator-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b35' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+}
+
+.separator-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.separator-title {
+    font-family: 'Creepster', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px var(--primary-orange);
+}
+
+.separator-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.spooky-decorations {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.decoration {
+    font-size: 2rem;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+}
+
+.decoration:nth-child(2) { animation-delay: 0.5s; }
+.decoration:nth-child(3) { animation-delay: 1s; }
+.decoration:nth-child(4) { animation-delay: 1.5s; }
+.decoration:nth-child(5) { animation-delay: 2s; }
 
 /* Contact Grid */
 .contact-grid {
@@ -649,6 +883,35 @@ body.light-mode .navbar {
     font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
+}
+
+/* Social Media Icons */
+.whatsapp-icon {
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.whatsapp-icon:hover {
+    color: var(--whatsapp-green);
+    transform: scale(1.1);
+}
+
+.instagram-icon {
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.instagram-icon:hover {
+    background: var(--instagram-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: scale(1.1);
+}
+
+.social-svg {
+    width: 48px;
+    height: 48px;
 }
 
 .contact-title {
@@ -714,6 +977,21 @@ body.light-mode .navbar {
     overflow-y: auto;
     position: relative;
     animation: modal-slide-in 0.3s ease;
+}
+
+/* Fix modal scrolling */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--dark-bg);
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--primary-orange);
+    border-radius: 4px;
 }
 
 .modal-close {
@@ -847,7 +1125,6 @@ body.light-mode .navbar {
 .footer {
     background: var(--shadow-black);
     padding: 4rem 0 2rem;
-    margin-top: 4rem;
     border-top: 1px solid rgba(255, 107, 53, 0.2);
 }
 
@@ -957,6 +1234,13 @@ body.light-mode .navbar {
     50% { transform: translateY(-8px); }
 }
 
+@keyframes float-creepy {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(5deg); }
+    50% { transform: translateY(-10px) rotate(-3deg); }
+    75% { transform: translateY(-20px) rotate(2deg); }
+}
+
 @keyframes fly-realistic {
     0% { 
         left: -50px; 
@@ -991,6 +1275,21 @@ body.light-mode .navbar {
     }
 }
 
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes glow-pulse {
+    from { opacity: 0.1; }
+    to { opacity: 0.3; }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .container {
@@ -998,6 +1297,18 @@ body.light-mode .navbar {
     }
     
     .nav-links {
+        display: none;
+    }
+    
+    .nav-controls {
+        gap: 0.5rem;
+    }
+    
+    .sound-control {
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .sound-text {
         display: none;
     }
     
@@ -1066,16 +1377,6 @@ body.light-mode .navbar {
         height: 45px;
     }
     
-    .sound-control {
-        right: 1rem;
-        top: 5rem;
-        padding: 0.6rem 1rem;
-    }
-    
-    .sound-text {
-        display: none;
-    }
-    
     .modal-content {
         margin: 10% auto;
         padding: 1.5rem;
@@ -1091,6 +1392,14 @@ body.light-mode .navbar {
         height: 80px;
         right: 10%;
         top: 15%;
+    }
+    
+    .spooky-decorations {
+        gap: 1rem;
+    }
+    
+    .decoration {
+        font-size: 1.5rem;
     }
 }
 
@@ -1122,7 +1431,18 @@ body.light-mode .navbar {
     }
     
     .event-card {
-        padding: 1.5rem;
+        padding: 0;
+    }
+    
+    .event-card > h3,
+    .event-card > .event-details,
+    .event-card > .event-btn {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .event-card > .event-btn {
+        padding-bottom: 1.5rem;
     }
     
     .contact-card {
@@ -1145,6 +1465,18 @@ body.light-mode .navbar {
     
     .nav-container {
         padding: 0 1rem;
+    }
+    
+    .separator-section {
+        padding: 3rem 0;
+    }
+    
+    .separator-title {
+        font-size: 1.5rem;
+    }
+    
+    .separator-text {
+        font-size: 1rem;
     }
 }
 

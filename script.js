@@ -1,4 +1,4 @@
-// Halloween Event Website JavaScript
+// Halloween Event Website JavaScript - Updated
 // Enhanced functionality for smooth user experience
 
 // Global variables
@@ -28,6 +28,7 @@ function initializeWebsite() {
     setupParallaxEffects();
     loadUserPreferences();
     displayConsoleMessage();
+    autoStartSound(); // Auto-start sound on website entry
 }
 
 // Loading Screen
@@ -43,6 +44,26 @@ function setupLoadingScreen() {
             }
         }, 2000);
     });
+}
+
+// Auto-start sound on website entry
+function autoStartSound() {
+    const backgroundAudio = document.getElementById('backgroundAudio');
+    const soundIcon = document.querySelector('.sound-icon');
+    
+    if (backgroundAudio && soundIcon) {
+        // Try to play audio automatically
+        backgroundAudio.play().then(() => {
+            soundEnabled = true;
+            soundIcon.textContent = '🔊';
+            localStorage.setItem('soundEnabled', 'true');
+        }).catch(() => {
+            // If autoplay fails (browser restriction), keep sound disabled
+            soundEnabled = false;
+            soundIcon.textContent = '🔇';
+            localStorage.setItem('soundEnabled', 'false');
+        });
+    }
 }
 
 // Countdown Timer
@@ -67,6 +88,12 @@ function setupCountdownTimer() {
             if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
             if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
             if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
+
+            // Add number change animation
+            animateNumberChange(daysElement, days);
+            animateNumberChange(hoursElement, hours);
+            animateNumberChange(minutesElement, minutes);
+            animateNumberChange(secondsElement, seconds);
         } else {
             const countdownTitle = document.querySelector('.countdown-title');
             const countdownTimer = document.getElementById('countdownTimer');
@@ -84,6 +111,24 @@ function setupCountdownTimer() {
     // Initialize countdown and update every second
     updateCountdown();
     setInterval(updateCountdown, 1000);
+}
+
+// Animate number changes in countdown
+function animateNumberChange(element, newValue) {
+    if (!element) return;
+    
+    const currentValue = element.textContent;
+    const formattedNewValue = newValue.toString().padStart(2, '0');
+    
+    if (currentValue !== formattedNewValue) {
+        element.style.transform = 'scale(1.1)';
+        element.style.color = 'var(--primary-orange)';
+        
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+            element.style.color = '#ffffff';
+        }, 300);
+    }
 }
 
 // Navigation functionality
@@ -109,9 +154,11 @@ function setupNavigation() {
 function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const moonElement = document.getElementById('moon');
-    const parallaxBg = document.querySelector('.parallax-bg'); // background layer (stars/haunted visuals)
+    const parallaxBg = document.querySelector('.parallax-bg');
+    const stars = document.querySelector('.stars');
     const mainTitle = document.querySelector('.main-title');
     const subtitle = document.querySelector('.subtitle');
+    const creepyImages = document.getElementById('creepyImages');
 
     if (!themeToggle) return;
 
@@ -126,28 +173,38 @@ function setupThemeToggle() {
             moonElement.style.transform = isDarkMode ? 'scale(1)' : 'scale(0)';
         }
 
+        // Hide/Show stars based on theme
+        if (stars) {
+            stars.style.opacity = isDarkMode ? '1' : '0';
+        }
+
         // Background handling
         if (!isDarkMode) {
-            document.body.style.background = "#ffffffff"; // pure white background
-            if (parallaxBg) parallaxBg.style.display = "none"; // hide stars/parallax
+            document.body.style.background = "#ffffff";
+            if (parallaxBg) parallaxBg.style.display = "none";
 
-            // Make header text red
-            if (mainTitle) mainTitle.style.color = "#f01c1ca2"; // dark red
-            if (subtitle) subtitle.style.color = "#e22e2eff";  // dark red
+            // Make header text red in light mode
+            if (mainTitle) mainTitle.style.color = "#8b0000";
+            if (subtitle) subtitle.style.color = "#8b0000";
+            
+            // Show creepy images in light mode
+            if (creepyImages) creepyImages.style.opacity = "1";
         } else {
-            document.body.style.background = ""; // restore dark via CSS vars
-            if (parallaxBg) parallaxBg.style.display = "block"; // show stars/parallax
+            document.body.style.background = "";
+            if (parallaxBg) parallaxBg.style.display = "block";
 
-            // Restore original colors
+            // Restore original colors in dark mode
             if (mainTitle) mainTitle.style.color = "var(--primary-orange)";
             if (subtitle) subtitle.style.color = "var(--text-secondary)";
+            
+            // Hide creepy images in dark mode
+            if (creepyImages) creepyImages.style.opacity = "0";
         }
 
         // Store preference
         localStorage.setItem('halloweenTheme', isDarkMode ? 'dark' : 'light');
     });
 }
-
 
 // Sound Control
 function setupSoundControl() {
@@ -173,9 +230,14 @@ function setupSoundControl() {
         // Store preference
         localStorage.setItem('soundEnabled', soundEnabled.toString());
     });
+
+    // Set initial volume
+    if (backgroundAudio) {
+        backgroundAudio.volume = 0.3; // 30% volume for background audio
+    }
 }
 
-// Modal System
+// Modal System - Updated to work only with "Learn More" buttons
 function setupModalSystem() {
     const modal = document.getElementById('eventModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -374,15 +436,19 @@ function setupModalSystem() {
         }
     };
 
-    // Event card click handlers
-    document.querySelectorAll('.event-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const eventType = card.getAttribute('data-event');
-            if (eventDetails[eventType] && modal && modalTitle && modalContent) {
-                modalTitle.innerHTML = eventDetails[eventType].title;
-                modalContent.innerHTML = eventDetails[eventType].content;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
+    // Event button click handlers - Only for "Learn More" buttons
+    document.querySelectorAll('.event-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent event bubbling
+            const eventCard = btn.closest('.event-card');
+            if (eventCard) {
+                const eventType = eventCard.getAttribute('data-event');
+                if (eventDetails[eventType] && modal && modalTitle && modalContent) {
+                    modalTitle.innerHTML = eventDetails[eventType].title;
+                    modalContent.innerHTML = eventDetails[eventType].content;
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                }
             }
         });
     });
@@ -516,6 +582,24 @@ function setupEasterEggs() {
             }, 300);
         });
     }
+
+    // Add spooky sounds for interactions
+    document.querySelectorAll('.event-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            if (soundEnabled && Math.random() < 0.3) { // 30% chance
+                playSpookySoundEffect('hover');
+            }
+        });
+    });
+
+    // Add special effects for buttons
+    document.querySelectorAll('.event-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (soundEnabled) {
+                playSpookySoundEffect('click');
+            }
+        });
+    });
 }
 
 // Parallax effects
@@ -527,15 +611,15 @@ function setupParallaxEffects() {
     const debouncedParallax = debounce(() => {
         const scrolled = window.pageYOffset;
         
-        if (parallaxBg) {
+        if (parallaxBg && !document.body.classList.contains('light-mode')) {
             parallaxBg.style.transform = `translateY(${scrolled * 0.3}px)`;
         }
         
         if (moon && !document.body.classList.contains('light-mode')) {
-            moon.style.transform = `translateY(${scrolled * 0.2}px)`;
+            moon.style.transform = `translateY(${scrolled * 0.2}px) scale(1)`;
         }
 
-        if (stars) {
+        if (stars && !document.body.classList.contains('light-mode')) {
             stars.style.transform = `translateY(${scrolled * 0.1}px)`;
         }
     }, 16); // ~60fps
@@ -546,6 +630,8 @@ function setupParallaxEffects() {
 // Load user preferences
 function loadUserPreferences() {
     const moonElement = document.getElementById('moon');
+    const stars = document.querySelector('.stars');
+    const creepyImages = document.getElementById('creepyImages');
     
     // Load theme preference
     const savedTheme = localStorage.getItem('halloweenTheme');
@@ -556,16 +642,37 @@ function loadUserPreferences() {
         if (themeToggle) {
             themeToggle.textContent = '☀️';
         }
-        // Hide moon in light mode
+        
+        // Hide moon and stars in light mode
         if (moonElement) {
             moonElement.style.opacity = '0';
             moonElement.style.transform = 'scale(0)';
         }
+        if (stars) {
+            stars.style.opacity = '0';
+        }
+        // Show creepy images in light mode
+        if (creepyImages) {
+            creepyImages.style.opacity = '1';
+        }
+        
+        // Set light mode colors
+        const mainTitle = document.querySelector('.main-title');
+        const subtitle = document.querySelector('.subtitle');
+        if (mainTitle) mainTitle.style.color = "#8b0000";
+        if (subtitle) subtitle.style.color = "#8b0000";
     } else {
-        // Show moon in dark mode
+        // Show moon and stars in dark mode
         if (moonElement) {
             moonElement.style.opacity = '1';
             moonElement.style.transform = 'scale(1)';
+        }
+        if (stars) {
+            stars.style.opacity = '1';
+        }
+        // Hide creepy images in dark mode
+        if (creepyImages) {
+            creepyImages.style.opacity = '0';
         }
     }
 
@@ -575,12 +682,13 @@ function loadUserPreferences() {
         soundEnabled = true;
         const soundIcon = document.querySelector('.sound-icon');
         if (soundIcon) {
-            soundIcon.textContent = '🔇';
+            soundIcon.textContent = '🔊';
         }
-        
-        const backgroundAudio = document.getElementById('backgroundAudio');
-        if (backgroundAudio) {
-            backgroundAudio.play().catch(e => console.log('Audio play failed:', e));
+    } else if (savedSoundSetting === 'false') {
+        soundEnabled = false;
+        const soundIcon = document.querySelector('.sound-icon');
+        if (soundIcon) {
+            soundIcon.textContent = '🔇';
         }
     }
 }
@@ -685,8 +793,8 @@ function showEasterEggMessage() {
     }, 5000);
 }
 
-// Utility function: Play spooky sound
-function playSpookySound() {
+// Utility function: Play spooky sound effects
+function playSpookySoundEffect(type) {
     if (!soundEnabled) return;
 
     try {
@@ -697,17 +805,39 @@ function playSpookySound() {
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
 
-        oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.5);
-
-        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.5);
+        switch (type) {
+            case 'hover':
+                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+                break;
+            case 'click':
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+                break;
+            default:
+                oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.5);
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+        }
     } catch (e) {
         console.log('Web Audio API not supported');
     }
+}
+
+// Utility function: Play spooky sound
+function playSpookySound() {
+    playSpookySoundEffect('default');
 }
 
 // Utility function: Debounce
@@ -741,7 +871,7 @@ Happy Halloween! 🎃
     `);
 }
 
-// Add CSS animation for ghost trail
+// Add CSS animation for ghost trail and other effects
 const style = document.createElement('style');
 style.textContent = `
     @keyframes ghost-fade {
@@ -749,6 +879,70 @@ style.textContent = `
             opacity: 0; 
             transform: scale(2) translateY(-20px); 
         }
+    }
+    
+    /* Image hover effects */
+    .event-img img {
+        filter: brightness(0.9) contrast(1.1);
+        transition: all 0.3s ease;
+    }
+    
+    .event-card:hover .event-img img {
+        filter: brightness(1.1) contrast(1.2) saturate(1.2);
+    }
+    
+    /* Enhanced button animations */
+    .event-btn {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .event-btn:active {
+        transform: translateY(-1px) scale(0.98);
+    }
+    
+    /* Smooth transitions for theme switching */
+    * {
+        transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    /* Enhanced modal animations */
+    .modal {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    
+    /* Loading screen enhancements */
+    .loading-screen {
+        background: linear-gradient(135deg, var(--darker-bg), var(--shadow-black));
+    }
+    
+    /* Social icon animations */
+    .whatsapp-icon svg,
+    .instagram-icon svg {
+        transition: all 0.3s ease;
+    }
+    
+    /* Enhanced countdown animations */
+    .time-unit {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .time-unit::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+    
+    .time-unit:hover::after {
+        transform: translateX(100%);
     }
 `;
 document.head.appendChild(style);
@@ -760,6 +954,67 @@ if ('performance' in window) {
             const perfData = performance.timing;
             const loadTime = perfData.loadEventEnd - perfData.navigationStart;
             console.log(`🚀 Page loaded in ${loadTime}ms`);
+            
+            // Log performance metrics for optimization
+            if (loadTime > 3000) {
+                console.warn('⚠️ Page load time is high. Consider optimizing images and scripts.');
+            }
         }, 0);
     });
 }
+
+// Add service worker for better performance (optional)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        // You can uncomment this if you want to add a service worker
+        // navigator.serviceWorker.register('/sw.js')
+        //     .then(registration => console.log('SW registered'))
+        //     .catch(registrationError => console.log('SW registration failed'));
+    });
+}
+
+// Handle visibility change for sound management
+document.addEventListener('visibilitychange', () => {
+    const backgroundAudio = document.getElementById('backgroundAudio');
+    if (backgroundAudio && soundEnabled) {
+        if (document.hidden) {
+            backgroundAudio.pause();
+        } else {
+            backgroundAudio.play().catch(e => console.log('Audio resume failed:', e));
+        }
+    }
+});
+
+// Add error handling for audio
+window.addEventListener('error', (e) => {
+    if (e.target && e.target.tagName === 'AUDIO') {
+        console.log('Audio loading failed, but site will continue to work normally.');
+    }
+});
+
+// Prevent right-click context menu for enhanced immersion (optional)
+// Uncomment if you want to disable right-click
+// document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Add keyboard shortcuts for better accessibility
+document.addEventListener('keydown', (e) => {
+    // Alt + T for theme toggle
+    if (e.altKey && e.key === 't') {
+        e.preventDefault();
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) themeToggle.click();
+    }
+    
+    // Alt + S for sound toggle
+    if (e.altKey && e.key === 's') {
+        e.preventDefault();
+        const soundToggle = document.getElementById('soundToggle');
+        if (soundToggle) soundToggle.click();
+    }
+    
+    // Alt + H for home
+    if (e.altKey && e.key === 'h') {
+        e.preventDefault();
+        document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+    }
+});

@@ -34,12 +34,16 @@
         <span class="bat">🦇</span>
         <span class="bat">🦇</span>
         <span class="bat">🦇</span>
+        <span class="bat">🦇</span>
     </div>
 
-    <!-- Sound Control -->
-    <div class="sound-control" id="soundToggle">
-        <span class="sound-icon">🔊</span>
-        <span class="sound-text">Sound</span>
+    <!-- Creepy images for light mode -->
+    <div class="creepy-images" id="creepyImages">
+        <div class="creepy-img" style="top: 20%; left: 10%; animation-delay: 0s;">👻</div>
+        <div class="creepy-img" style="top: 30%; right: 15%; animation-delay: 2s;">🕷️</div>
+        <div class="creepy-img" style="top: 60%; left: 20%; animation-delay: 4s;">💀</div>
+        <div class="creepy-img" style="bottom: 30%; right: 10%; animation-delay: 1s;">🎭</div>
+        <div class="creepy-img" style="bottom: 20%; left: 30%; animation-delay: 3s;">🔮</div>
     </div>
 
     <!-- Navigation -->
@@ -47,10 +51,7 @@
         <div class="nav-container">
             <a href="#home" class="logo">
                 <div class="logo-img">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <polygon points="50,10 90,30 80,70 20,70 10,30" fill="currentColor"/>
-                        <text x="50" y="60" font-family="Arial Black" font-size="30" text-anchor="middle" fill="white">A</text>
-                    </svg>
+                    <img src="asserts/Adobe Express - file.jpg" alt="">
                 </div>
                 <span class="logo-text">Aikya Club</span>
             </a>
@@ -59,7 +60,13 @@
                 <li><a href="#events">Events</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle">🌙</button>
+            <div class="nav-controls">
+                <div class="sound-control" id="soundToggle">
+                    <span class="sound-icon">🔊</span>
+                    <span class="sound-text">Sound</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
         </div>
     </nav>
 
@@ -67,7 +74,7 @@
     <header id="home" class="header">
         <div class="header-content">
             <h1 class="main-title">THE CURSE AWAKENS</h1>
-            <p class="subtitle">Join us for the most spine-chilling night of the year...</p>
+            <p class="subtitle">The haunting begins in the morning… will you survive till nightfall?</p>
             
             <div class="countdown-container">
                 <h3 class="countdown-title">The Curse Awakens In...</h3>
@@ -75,18 +82,22 @@
                     <div class="time-unit">
                         <span class="time-number" id="days">00</span>
                         <span class="time-label">Days</span>
+                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="hours">00</span>
                         <span class="time-label">Hours</span>
+                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="minutes">00</span>
                         <span class="time-label">Minutes</span>
+                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="seconds">00</span>
                         <span class="time-label">Seconds</span>
+                        <div class="time-glow"></div>
                     </div>
                 </div>
             </div>
@@ -106,7 +117,9 @@
             
             <div class="events-grid">
                 <div class="event-card" data-event="costume-contest">
-                    <div class="event-icon">👻</div>
+                    <div class="event-img">
+                        <img src="/asserts/costume-contest.jpg" alt="Costume Contest">
+                    </div>
                     <h3 class="event-title">Costume Contest</h3>
                     <div class="event-details">
                         <p class="event-time">7:00 PM - 8:00 PM</p>
@@ -117,7 +130,9 @@
                 </div>
                 
                 <div class="event-card" data-event="horror-quiz">
-                    <div class="event-icon">🧠</div>
+                    <div class="event-img">
+                        <img src="/asserts/horror-quiz.jpg" alt="Horror Quiz">
+                    </div>
                     <h3 class="event-title">Horror Quiz Night</h3>
                     <div class="event-details">
                         <p class="event-time">8:30 PM - 9:30 PM</p>
@@ -128,7 +143,9 @@
                 </div>
                 
                 <div class="event-card" data-event="haunted-house">
-                    <div class="event-icon">🏚️</div>
+                    <div class="event-img">
+                        <img src="/asserts/haunted-house.jpg" alt="Haunted House">
+                    </div>
                     <h3 class="event-title">Haunted House</h3>
                     <div class="event-details">
                         <p class="event-time">6:00 PM - 11:00 PM</p>
@@ -139,7 +156,9 @@
                 </div>
                 
                 <div class="event-card" data-event="dance-floor">
-                    <div class="event-icon">💃</div>
+                    <div class="event-img">
+                        <img src="/asserts/dance-floor.jpg" alt="Dance Floor">
+                    </div>
                     <h3 class="event-title">Spooky Dance Floor</h3>
                     <div class="event-details">
                         <p class="event-time">9:30 PM - 12:00 AM</p>
@@ -150,7 +169,9 @@
                 </div>
                 
                 <div class="event-card" data-event="photo-booth">
-                    <div class="event-icon">📸</div>
+                    <div class="event-img">
+                        <img src="/asserts/photo-booth.jpg" alt="Photo Booth">
+                    </div>
                     <h3 class="event-title">Horror Photo Booth</h3>
                     <div class="event-details">
                         <p class="event-time">All Evening</p>
@@ -161,7 +182,9 @@
                 </div>
                 
                 <div class="event-card" data-event="food-stalls">
-                    <div class="event-icon">🍕</div>
+                    <div class="event-img">
+                        <img src="/asserts/food-stalls.jpg" alt="Food Stalls">
+                    </div>
                     <h3 class="event-title">Midnight Feast</h3>
                     <div class="event-details">
                         <p class="event-time">7:00 PM onwards</p>
@@ -169,6 +192,23 @@
                         <p class="event-description">Blood cocktails special!</p>
                     </div>
                     <button class="event-btn">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separator Section -->
+    <section class="separator-section">
+        <div class="container">
+            <div class="separator-content">
+                <h3 class="separator-title">Ready to Face Your Fears?</h3>
+                <p class="separator-text">Don't miss out on the most terrifying event of the year!</p>
+                <div class="spooky-decorations">
+                    <span class="decoration">🦇</span>
+                    <span class="decoration">👻</span>
+                    <span class="decoration">🎃</span>
+                    <span class="decoration">💀</span>
+                    <span class="decoration">🕷️</span>
                 </div>
             </div>
         </div>
@@ -182,7 +222,11 @@
             
             <div class="contact-grid">
                 <div class="contact-card">
-                    <div class="contact-icon">📱</div>
+                    <div class="contact-icon whatsapp-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.89 3.403"/>
+                        </svg>
+                    </div>
                     <h3 class="contact-title">WhatsApp Group</h3>
                     <div class="contact-info">
                         <p class="contact-description">Join our coven chat for live updates and connect with fellow ghouls!</p>
@@ -191,21 +235,28 @@
                 </div>
                 
                 <div class="contact-card">
-                    <div class="contact-icon">📸</div>
+                    <div class="contact-icon instagram-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </div>
                     <h3 class="contact-title">Instagram</h3>
                     <div class="contact-info">
                         <p class="contact-description">Follow us for spooky behind-the-scenes content!</p>
-                        <a href="https://instagram.com/dummy-handle" target="_blank" class="contact-link">@aikya_club_official</a>
+                        <a href="https://www.instagram.com/aikya_rnsit/" target="_blank" class="contact-link">@aikya_rnsit</a>
                     </div>
                 </div>
                 
                 <div class="contact-card">
-                    <div class="contact-icon">👤</div>
+                    <div class="contact-icon">📞</div>
                     <h3 class="contact-title">Event Coordinator</h3>
                     <div class="contact-info">
-                        <p class="contact-name">Sarah Blackwood</p>
-                        <p class="contact-description">Available: 10 AM - 8 PM</p>
+                        <p class="contact-name">Suhan</p>
                         <a href="tel:+91-9876543210" class="contact-link">+91-9876543210</a>
+                        <p class="contact-description">Available: 10 AM - 6 PM</p>
+                        <p class="contact-name">Swathi</p>
+                        <a href="tel:+91-9876543210" class="contact-link">+91-6876543210</a>
+                        <p class="contact-description">Available: 10 AM - 6 PM</p>
                     </div>
                 </div>
             </div>
@@ -216,33 +267,27 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <h3 class="footer-title">Aikya Club Presents</h3>
-                <p class="footer-subtitle">The most spine-chilling Halloween event of 2025</p>
+                <h3 class="footer-title">Aikya Club Invites You !</h3>
+                <p class="footer-subtitle">Unravel the thrills, chills, and frights of 2025</p>
                 
                 <div class="footer-details">
                     <div class="footer-detail">
                         <span class="detail-icon">📍</span>
-                        <span>Main Auditorium, University Campus</span>
+                        <span>IT Block | RNS Institute of Technology</span>
                     </div>
                     <div class="footer-detail">
                         <span class="detail-icon">🕰️</span>
-                        <span>October 31st, 2025 | 6:00 PM onwards</span>
+                        <span>October 25th - 26th, 2025 | 9:00 AM onwards</span>
                     </div>
                     <div class="footer-detail">
                         <span class="detail-icon">💰</span>
-                        <span>Entry: ₹100 onwards | All Access: ₹400</span>
+                        <span>Fun, Frights & Spooky Delights — No Entry Fee!</span>
                     </div>
-                </div>
-                
-                <div class="footer-social">
-                    <a href="#" class="social-link">Instagram</a>
-                    <a href="#" class="social-link">WhatsApp</a>
-                    <a href="#" class="social-link">Email</a>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p class="footer-copyright">© 2025 Aikya Club. All souls reserved.</p>
+                <p class="footer-copyright">© 2025 Aikya Club. All souls claimed. 👻</p>
             </div>
         </div>
     </footer>
