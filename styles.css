@@ -33,7 +33,7 @@ body.light-mode {
     --ghost-white: #8b0000;
 }
 
-/* Smooth scroll behavior fix */
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -46,11 +46,6 @@ html {
     scroll-padding-top: 80px;
 }
 
-/* Ensure smooth transitions across all elements */
-*, *::before, *::after {
-    transition: inherit;
-}
-
 body {
     font-family: 'Inter', sans-serif;
     background: var(--dark-bg);
@@ -59,15 +54,6 @@ body {
     line-height: 1.6;
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff6b35" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>'), auto;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    scroll-behavior: smooth;
-}
-
-/* Enhanced scroll behavior for webkit browsers */
-html, body {
-    -webkit-scroll-behavior: smooth;
-    -moz-scroll-behavior: smooth;
-    -ms-scroll-behavior: smooth;
-    scroll-behavior: smooth;
 }
 
 /* Custom cursor for interactive elements */
@@ -149,6 +135,7 @@ a, button, .clickable {
     z-index: -2;
 }
 
+/* Moon - hidden in light mode */
 .moon {
     position: fixed;
     top: 10%;
@@ -162,15 +149,14 @@ a, button, .clickable {
         0 0 40px rgba(255, 255, 255, 0.3);
     z-index: -1;
     animation: moon-glow 4s ease-in-out infinite alternate;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Light mode moon */
+/* Hide moon in light mode */
 body.light-mode .moon {
-    background: radial-gradient(circle at 35% 35%, #333 0%, #666 70%, #999 100%);
-    box-shadow: 
-        inset -10px -10px 0 rgba(255,255,255,0.1),
-        0 0 40px rgba(139, 0, 0, 0.3);
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
 }
 
 .flying-bats {
@@ -209,26 +195,28 @@ body.light-mode .moon {
     animation-duration: 15s;
 }
 
-/* Navigation with smooth transitions */
-nav {
+/* Navigation - Fixed visibility and z-index */
+.navbar {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(15px);
     padding: 1rem 0;
-    z-index: 1000;
+    z-index: 9999;
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                background 0.3s ease,
-                backdrop-filter 0.3s ease;
-    will-change: transform;
+                background 0.3s ease;
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
 }
 
-body.light-mode nav {
+body.light-mode .navbar {
     background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(139, 0, 0, 0.2);
 }
 
-nav.hidden {
+.navbar.hidden {
     transform: translateY(-100%);
 }
 
@@ -246,20 +234,30 @@ nav.hidden {
     align-items: center;
     text-decoration: none;
     transition: transform 0.3s ease;
+    color: var(--text-primary);
 }
 
 .logo:hover {
     transform: scale(1.05);
 }
 
+/* Fixed Aikya Logo SVG */
 .logo-img {
     width: 40px;
     height: 40px;
     border-radius: 8px;
-    margin-right: 0.5rem;
+    margin-right: 0.8rem;
     background: linear-gradient(135deg, var(--primary-orange), var(--primary-purple));
-    padding: 8px;
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpolygon fill='white' points='100,20 180,60 160,140 40,140 20,60'/%3E%3Ctext x='100' y='120' font-family='Arial Black' font-size='60' text-anchor='middle' fill='%23ff6b35'%3EA%3C/text%3E%3C/svg%3E");
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-orange);
+}
+
+.logo-img svg {
+    width: 100%;
+    height: 100%;
 }
 
 .logo-text {
@@ -327,17 +325,18 @@ nav.hidden {
     transform: rotate(180deg);
 }
 
-/* Header Section */
-header {
+/* Header Section - Fixed to account for navbar */
+.header {
     position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    padding-top: 80px;
     background: 
         radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%),
-        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.1'%3E%3Cpolygon points='100,20 180,60 160,140 40,140 20,60'/%3E%3Cpolygon points='100,40 160,70 150,130 50,130 40,70'/%3E%3C/g%3E%3Ctext x='100' y='115' font-family='Arial Black' font-size='80' text-anchor='middle' fill='%23ffffff' opacity='0.05'%3EAIKYA%3C/text%3E%3C/svg%3E") center/300px no-repeat;
+        var(--dark-bg) url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.1'%3E%3Cpolygon points='100,20 180,60 160,140 40,140 20,60'/%3E%3Cpolygon points='100,40 160,70 150,130 50,130 40,70'/%3E%3C/g%3E%3Ctext x='100' y='115' font-family='Arial Black' font-size='80' text-anchor='middle' fill='%23ffffff' opacity='0.05'%3EAIKYA%3C/text%3E%3C/svg%3E") center/300px no-repeat;
 }
 
 .header-content {
@@ -362,6 +361,34 @@ header {
     color: var(--text-secondary);
     margin-bottom: 3rem;
     font-weight: 400;
+}
+
+/* Sound Control */
+.sound-control {
+    position: absolute;
+    top: 6rem;
+    right: 2rem;
+    background: var(--card-bg);
+    border: 2px solid var(--primary-purple);
+    border-radius: 50px;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--primary-orange);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
+}
+
+.sound-control:hover {
+    background: var(--primary-purple);
+    color: white;
+}
+
+.sound-icon {
+    font-size: 1.2rem;
 }
 
 /* Countdown Timer */
@@ -408,6 +435,7 @@ header {
     font-weight: 700;
     display: block;
     font-family: 'Poppins', sans-serif;
+    color: #ffffff;
 }
 
 .time-label {
@@ -416,6 +444,7 @@ header {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: #ffffff;
 }
 
 /* CTA Buttons */
@@ -497,7 +526,6 @@ header {
     margin-right: auto;
 }
 
-/* Event cards with better hover transitions */
 /* Events Grid */
 .events-grid {
     display: grid;
@@ -508,7 +536,7 @@ header {
 
 .event-card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 107, 53, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
@@ -659,34 +687,6 @@ header {
 .contact-link:hover {
     color: var(--ghost-white);
     text-shadow: 0 0 5px var(--primary-orange);
-}
-
-/* Sound Control */
-.sound-control {
-    position: fixed;
-    top: 6rem;
-    right: 2rem;
-    background: var(--card-bg);
-    border: 2px solid var(--primary-purple);
-    border-radius: 50px;
-    padding: 0.8rem 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--primary-orange);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(15px);
-}
-
-.sound-control:hover {
-    background: var(--primary-purple);
-    color: white;
-}
-
-.sound-icon {
-    font-size: 1.2rem;
 }
 
 /* Modal */
@@ -1147,10 +1147,6 @@ header {
         padding: 0 1rem;
     }
 }
-
-/* Remove Smooth scroll behavior fix - already defined above */
-
-/* Smooth scroll behavior fix */
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

@@ -48,7 +48,7 @@ function setupLoadingScreen() {
 // Countdown Timer
 function setupCountdownTimer() {
     function updateCountdown() {
-        const eventDate = new Date('2025-10-31T18:00:00').getTime();
+        const eventDate = new Date('2025-09-25T09:00:00').getTime();
         const now = new Date().getTime();
         const distance = eventDate - now;
 
@@ -108,18 +108,46 @@ function setupNavigation() {
 // Theme Toggle (Light/Dark Mode)
 function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    
+    const moonElement = document.getElementById('moon');
+    const parallaxBg = document.querySelector('.parallax-bg'); // background layer (stars/haunted visuals)
+    const mainTitle = document.querySelector('.main-title');
+    const subtitle = document.querySelector('.subtitle');
+
     if (!themeToggle) return;
 
     themeToggle.addEventListener('click', () => {
         isDarkMode = !isDarkMode;
         document.body.classList.toggle('light-mode');
         themeToggle.textContent = isDarkMode ? '🌙' : '☀️';
-        
+
+        // Hide/Show moon based on theme
+        if (moonElement) {
+            moonElement.style.opacity = isDarkMode ? '1' : '0';
+            moonElement.style.transform = isDarkMode ? 'scale(1)' : 'scale(0)';
+        }
+
+        // Background handling
+        if (!isDarkMode) {
+            document.body.style.background = "#ffffffff"; // pure white background
+            if (parallaxBg) parallaxBg.style.display = "none"; // hide stars/parallax
+
+            // Make header text red
+            if (mainTitle) mainTitle.style.color = "#f01c1ca2"; // dark red
+            if (subtitle) subtitle.style.color = "#e22e2eff";  // dark red
+        } else {
+            document.body.style.background = ""; // restore dark via CSS vars
+            if (parallaxBg) parallaxBg.style.display = "block"; // show stars/parallax
+
+            // Restore original colors
+            if (mainTitle) mainTitle.style.color = "var(--primary-orange)";
+            if (subtitle) subtitle.style.color = "var(--text-secondary)";
+        }
+
         // Store preference
         localStorage.setItem('halloweenTheme', isDarkMode ? 'dark' : 'light');
     });
 }
+
 
 // Sound Control
 function setupSoundControl() {
@@ -133,7 +161,7 @@ function setupSoundControl() {
         const soundIcon = soundToggle.querySelector('.sound-icon');
         
         if (soundIcon) {
-            soundIcon.textContent = soundEnabled ? '🔇' : '🔊';
+            soundIcon.textContent = soundEnabled ? '🔊' : '🔇';
         }
         
         if (soundEnabled) {
@@ -503,7 +531,7 @@ function setupParallaxEffects() {
             parallaxBg.style.transform = `translateY(${scrolled * 0.3}px)`;
         }
         
-        if (moon) {
+        if (moon && !document.body.classList.contains('light-mode')) {
             moon.style.transform = `translateY(${scrolled * 0.2}px)`;
         }
 
@@ -517,6 +545,8 @@ function setupParallaxEffects() {
 
 // Load user preferences
 function loadUserPreferences() {
+    const moonElement = document.getElementById('moon');
+    
     // Load theme preference
     const savedTheme = localStorage.getItem('halloweenTheme');
     if (savedTheme === 'light') {
@@ -525,6 +555,17 @@ function loadUserPreferences() {
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             themeToggle.textContent = '☀️';
+        }
+        // Hide moon in light mode
+        if (moonElement) {
+            moonElement.style.opacity = '0';
+            moonElement.style.transform = 'scale(0)';
+        }
+    } else {
+        // Show moon in dark mode
+        if (moonElement) {
+            moonElement.style.opacity = '1';
+            moonElement.style.transform = 'scale(1)';
         }
     }
 

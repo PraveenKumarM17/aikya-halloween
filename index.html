@@ -28,7 +28,7 @@
 
     <!-- Parallax Background -->
     <div class="parallax-bg"></div>
-    <div class="moon"></div>
+    <div class="moon" id="moon"></div>
     <div class="stars"></div>
     <div class="flying-bats">
         <span class="bat">🦇</span>
@@ -43,10 +43,15 @@
     </div>
 
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav id="navbar" class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
-                <img src="https://via.placeholder.com/50x50/ff6b35/ffffff?text=A" alt="Aikya Logo" class="logo-img">
+                <div class="logo-img">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="50,10 90,30 80,70 20,70 10,30" fill="currentColor"/>
+                        <text x="50" y="60" font-family="Arial Black" font-size="30" text-anchor="middle" fill="white">A</text>
+                    </svg>
+                </div>
                 <span class="logo-text">Aikya Club</span>
             </a>
             <ul class="nav-links">
@@ -59,7 +64,7 @@
     </nav>
 
     <!-- Header Section -->
-    <header id="home">
+    <header id="home" class="header">
         <div class="header-content">
             <h1 class="main-title">THE CURSE AWAKENS</h1>
             <p class="subtitle">Join us for the most spine-chilling night of the year...</p>
@@ -267,7 +272,7 @@
 
     <!-- Audio elements (hidden) -->
     <audio id="backgroundAudio" loop>
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+        <source src="asserts/Horror.mp3" type="audio/wav">
         <!-- Fallback for browsers that don't support audio -->
     </audio>
 
