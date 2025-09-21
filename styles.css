@@ -529,7 +529,7 @@ body.light-mode .sound-control:hover {
     padding: 1.2rem 0.8rem;
     border-radius: 15px;
     width: 100%;
-    max-width: 90px;
+    max-width: 100px;
     text-align: center;
     box-shadow: 
         0 8px 25px rgba(0,0,0,0.4),
