@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>🎃 The Curse Awakens - Aikya Halloween Event</title>
     <meta name="description" content="Join Aikya Club's spine-chilling Halloween event featuring costume contests, haunted house experiences, and terrifying entertainment. October 31st - dare to enter!">
     
@@ -18,6 +18,12 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Mobile optimization meta tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff6b35">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -27,15 +33,16 @@
     </div>
 
     <!-- Parallax Background -->
-    <div class="parallax-bg"></div>
-    <div class="moon" id="moon"></div>
-    <div class="stars"></div>
-    <div class="flying-bats">
-        <span class="bat">🦇</span>
-        <span class="bat">🦇</span>
-        <span class="bat">🦇</span>
-        <span class="bat">🦇</span>
-    </div>
+<div class="parallax-bg"></div>
+<div class="moon" id="moon"></div>
+<div class="stars"></div>
+
+<div class="flying-bats">
+    <span class="bat">🦇</span>
+    <span class="bat">🦇</span>
+    <span class="bat">🦇</span>
+    <span class="bat">🦇</span>
+</div>
 
     <!-- Creepy images for light mode -->
     <div class="creepy-images" id="creepyImages">
@@ -46,12 +53,12 @@
         <div class="creepy-img" style="bottom: 20%; left: 30%; animation-delay: 3s;">🔮</div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation - Fixed for mobile stability -->
     <nav id="navbar" class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
                 <div class="logo-img">
-                    <img src="asserts/Adobe Express - file.jpg" alt="">
+                    <img src="asserts/Adobe Express - file.webp" alt="Aikya Club Logo">
                 </div>
                 <span class="logo-text">Aikya Club</span>
             </a>
@@ -76,6 +83,7 @@
             <h1 class="main-title">THE CURSE AWAKENS</h1>
             <p class="subtitle">The haunting begins in the morning… will you survive till nightfall?</p>
             
+            <!-- Fixed countdown container with proper glow transitions -->
             <div class="countdown-container">
                 <h3 class="countdown-title">The Curse Awakens In...</h3>
                 <div class="countdown-timer" id="countdownTimer">
@@ -355,10 +363,10 @@
                     <h3 class="contact-title">Event Coordinators</h3>
                     <div class="contact-info">
                         <p class="contact-name">Suhan</p>
-                        <a href="tel:+91-9876543210" class="contact-link">+91-9606592647</a>
+                        <a href="tel:+91-9606592647" class="contact-link">+91-9606592647</a>
                         <p class="contact-description">Available: 10 AM - 6 PM</p>
                         <p class="contact-name">Swathi</p>
-                        <a href="tel:+91-6876543210" class="contact-link">+91-9108229279</a>
+                        <a href="tel:+91-9108229279" class="contact-link">+91-9108229279</a>
                         <p class="contact-description">Available: 10 AM - 6 PM</p>
                     </div>
                 </div>
@@ -395,7 +403,7 @@
         </div>
     </footer>
 
-    <!-- Floating Elements -->
+    <!-- Fixed Floating Elements - Mobile stable -->
     <a href="#contact" class="floating-cta" id="floatingCTA">
         <span class="floating-icon">🎃</span>
         <span class="floating-text">Join</span>
@@ -404,10 +412,10 @@
         <span class="scroll-icon">↑</span>
     </button>
 
-    <!-- Modal -->
+    <!-- Modal with improved mobile handling -->
     <div id="eventModal" class="modal">
         <div class="modal-content">
-            <button class="modal-close">&times;</button>
+            <button class="modal-close" aria-label="Close modal">&times;</button>
             <h2 id="modalTitle" class="modal-title">Event Details</h2>
             <div id="modalContent" class="modal-body">
                 <!-- Modal content will be dynamically filled -->
@@ -419,8 +427,8 @@
     </div>
 
     <!-- Audio elements (hidden) -->
-    <audio id="backgroundAudio" loop>
-        <source src="asserts/Horror.mp3" type="audio/wav">
+    <audio id="backgroundAudio" loop preload="none">
+        <source src="asserts/Horror.mp3" type="audio/mpeg">
         <!-- Fallback for browsers that don't support audio -->
     </audio>
 
