@@ -2,14 +2,35 @@
 // Enhanced functionality for smooth user experience
 
 const images = [
-    "asserts/Qudditch.png",
-    "asserts/TreasureHunt.png",
-    "asserts/Valvo.jpg",
-    "asserts/Robo.png",
-    "asserts/Tech.jpg",
-    "asserts/Poster.jpg",
-    "asserts/HauntedHouse.jpg"
-  ];
+  // 🎭 Event Posters
+  "asserts/Qudditch.png",
+  "asserts/TreasureHunt.png",
+  "asserts/Valvo.jpg",
+  "asserts/Robo.png",
+  "asserts/Tech.jpg",
+  "asserts/Poster.jpg",
+  "asserts/HauntedHouse.jpg",
+  "asserts/potionMatching.png",
+  "asserts/BlindTyping.jpg",
+  "asserts/Mindgame.png",
+  "asserts/Movie.jpg",
+  "asserts/valvoFinal.png",
+  "asserts/RelayGame.png",
+  "asserts/PosterMaking.png",
+  "asserts/EscapeRoom.png",
+  "asserts/MovieThrival.png",
+  "asserts/Costume.jpg",
+
+  // 🏷️ Branding / Logo
+  "asserts/Adobe Express - file.jpg",
+
+  // 🌌 Backgrounds (only if you’re using actual image files, 
+  // otherwise skip since your code uses CSS/emoji)
+  // "asserts/parallax-bg.png",
+  // "asserts/moon.png",
+  // "asserts/stars.png",
+  // "asserts/bats.png"
+];
   
   images.forEach(src => {
     const img = new Image();
