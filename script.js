@@ -1,6 +1,21 @@
 // Halloween Event Website JavaScript - Updated and Enhanced
 // Enhanced functionality for smooth user experience
 
+const images = [
+    "asserts/Qudditch.png",
+    "asserts/TreasureHunt.png",
+    "asserts/Valvo.jpg",
+    "asserts/Robo.png",
+    "asserts/Tech.jpg",
+    "asserts/Poster.jpg",
+    "asserts/HauntedHouse.jpg"
+  ];
+  
+  images.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+
 // Global variables
 let isDarkMode = true;
 let soundEnabled = false;
