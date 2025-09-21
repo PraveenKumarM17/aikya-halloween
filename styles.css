@@ -661,7 +661,7 @@ body.light-mode .sound-control:hover {
 
 /* Light mode event card border */
 body.light-mode .event-card {
-    border: 2px solid var(--primary-orange);
+    border: 2px solid rgba(255, 107, 53, 0.2);
     box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
 }
 
