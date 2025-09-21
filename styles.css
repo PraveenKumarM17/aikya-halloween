@@ -1,4 +1,4 @@
-/* Halloween Event Website Styles - Updated */
+/* Halloween Event Website Styles - Updated and Fixed */
 
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
@@ -104,7 +104,7 @@ a, button, .clickable {
     animation: pulse 2s ease-in-out infinite;
 }
 
-/* Background Elements */
+/* Background Elements - Enhanced for desktop */
 .parallax-bg {
     position: fixed;
     top: 0;
@@ -114,11 +114,13 @@ a, button, .clickable {
     background: 
         radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(106, 5, 114, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.05) 0%, transparent 60%),
         linear-gradient(180deg, var(--dark-bg) 0%, #1a0a2e 50%, #16213e 100%);
     z-index: -3;
     transition: background 0.3s ease;
 }
 
+/* Enhanced stars animation */
 .stars {
     position: fixed;
     top: 0;
@@ -130,12 +132,44 @@ a, button, .clickable {
         radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
         radial-gradient(1px 1px at 90px 40px, #fff, transparent),
         radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+        radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+        radial-gradient(1px 1px at 200px 60px, rgba(255, 107, 53, 0.8), transparent),
+        radial-gradient(2px 2px at 250px 120px, rgba(106, 5, 114, 0.6), transparent);
     background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: twinkle 10s ease-in-out infinite alternate;
+    background-size: 300px 200px;
+    animation: twinkle 15s ease-in-out infinite alternate, drift 30s linear infinite;
     z-index: -2;
 }
+
+/* Floating particles for desktop interactivity */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-orange);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float-particles 20s linear infinite;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-delay: -5s; }
+.particle:nth-child(3) { left: 30%; animation-delay: -10s; }
+.particle:nth-child(4) { left: 40%; animation-delay: -15s; }
+.particle:nth-child(5) { left: 50%; animation-delay: -20s; }
+.particle:nth-child(6) { left: 60%; animation-delay: -25s; }
+.particle:nth-child(7) { left: 70%; animation-delay: -30s; }
+.particle:nth-child(8) { left: 80%; animation-delay: -35s; }
 
 /* Creepy images for light mode */
 .creepy-images {
@@ -270,24 +304,23 @@ body.light-mode .navbar {
 
 /* Circular JPG Logo (No background) */
 .logo-img {
-    width: 50px;                       /* container size */
+    width: 50px;
     height: 50px;
-    border-radius: 50%;                /* makes it a perfect circle */
-    overflow: hidden;                  /* crop the edges of the image */
+    border-radius: 50%;
+    overflow: hidden;
     display: inline-block;
-    margin-right: 0.8rem;              /* optional spacing */
-    padding: 0;                         /* no padding */
-    background: none;                  /* no background */
+    margin-right: 0.8rem;
+    padding: 0;
+    background: none;
 }
 
 /* JPG inside the logo container */
 .logo-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;                 /* fills the circle, keeps aspect ratio */
+    object-fit: cover;
     display: block;
 }
-
 
 .logo-text {
     font-family: 'Creepster', cursive;
@@ -396,7 +429,7 @@ body.light-mode .sound-control:hover {
     transform: rotate(180deg);
 }
 
-/* Header Section - Fixed to account for navbar */
+/* Header Section - Enhanced for desktop */
 .header {
     position: relative;
     min-height: 100vh;
@@ -408,6 +441,21 @@ body.light-mode .sound-control:hover {
     background: 
         radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%),
         var(--dark-bg) url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.1'%3E%3Cpolygon points='100,20 180,60 160,140 40,140 20,60'/%3E%3Cpolygon points='100,40 160,70 150,130 50,130 40,70'/%3E%3C/g%3E%3Ctext x='100' y='115' font-family='Arial Black' font-size='80' text-anchor='middle' fill='%23ffffff' opacity='0.05'%3EAIKYA%3C/text%3E%3C/svg%3E") center/300px no-repeat;
+}
+
+/* Add interactive elements to header for desktop */
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(106, 5, 114, 0.08) 0%, transparent 60%);
+    animation: pulse-bg 8s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 .header-content {
@@ -434,7 +482,7 @@ body.light-mode .sound-control:hover {
     font-weight: 400;
 }
 
-/* Enhanced Countdown Timer */
+/* Enhanced Countdown Timer - Fixed for mobile */
 .countdown-container {
     background: var(--card-bg);
     border: 2px solid var(--primary-purple);
@@ -469,18 +517,19 @@ body.light-mode .sound-control:hover {
 }
 
 .countdown-timer {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    justify-items: center;
 }
 
 .time-unit {
     position: relative;
     background: linear-gradient(135deg, var(--blood-red), var(--primary-purple));
-    padding: 1.5rem 1rem;
+    padding: 1.2rem 0.8rem;
     border-radius: 15px;
-    min-width: 80px;
+    width: 100%;
+    max-width: 90px;
     text-align: center;
     box-shadow: 
         0 8px 25px rgba(0,0,0,0.4),
@@ -518,7 +567,7 @@ body.light-mode .sound-control:hover {
 }
 
 .time-number {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
     font-weight: 700;
     display: block;
     font-family: 'Poppins', sans-serif;
@@ -529,7 +578,7 @@ body.light-mode .sound-control:hover {
 }
 
 .time-label {
-    font-size: 0.9rem;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
     opacity: 0.9;
     font-weight: 500;
     text-transform: uppercase;
@@ -537,6 +586,7 @@ body.light-mode .sound-control:hover {
     color: #ffffff;
     position: relative;
     z-index: 1;
+    margin-top: 0.2rem;
 }
 
 /* CTA Buttons */
@@ -712,17 +762,12 @@ body.light-mode .event-card:hover {
 
 /* Event Content */
 .event-card > h3,
-.event-card > .event-details,
-.event-card > .event-btn {
+.event-card > .event-details {
     padding: 0 2rem;
 }
 
 .event-card > h3 {
     padding-top: 1.5rem;
-}
-
-.event-card > .event-btn {
-    padding: 0 2rem 2rem;
 }
 
 .event-title {
@@ -734,7 +779,7 @@ body.light-mode .event-card:hover {
 }
 
 .event-details {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .event-time {
@@ -755,8 +800,8 @@ body.light-mode .event-card:hover {
     line-height: 1.5;
 }
 
+/* Fixed event button positioning and styling */
 .event-btn {
-    display: block; /* Change from flex to block for better centering control */
     background: linear-gradient(135deg, var(--primary-orange), var(--blood-red));
     color: white;
     border: none;
@@ -764,16 +809,18 @@ body.light-mode .event-card:hover {
     border-radius: 25px;
     font-weight: 600;
     transition: all 0.3s ease;
-    width: 90%;
-    max-width: 250px;
+    width: calc(100% - 4rem);
+    max-width: 90%;
     cursor: pointer;
-    position: absolute;
+    position: relative;
     overflow: hidden;
-    margin: 0 auto 15px auto;
-    text-align: center; /* This will center the text */
-    line-height: normal; /* Reset line height */
+    margin: 0 2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
 }
-
 
 .event-btn::before {
     content: '';
@@ -952,11 +999,11 @@ body.light-mode .event-card:hover {
     text-shadow: 0 0 5px var(--primary-orange);
 }
 
-/* Modal */
+/* Modal - Fixed positioning to avoid navbar overlap */
 .modal {
     display: none;
     position: fixed;
-    z-index: 2000;
+    z-index: 10000;
     left: 0;
     top: 0;
     width: 100%;
@@ -967,7 +1014,7 @@ body.light-mode .event-card:hover {
 
 .modal-content {
     background: linear-gradient(135deg, var(--shadow-black), var(--card-bg));
-    margin: 5% auto;
+    margin: 8% auto 5%;
     padding: 2rem;
     border: 2px solid var(--primary-orange);
     border-radius: 20px;
@@ -981,17 +1028,21 @@ body.light-mode .event-card:hover {
 
 /* Fix modal scrolling */
 .modal-content::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .modal-content::-webkit-scrollbar-track {
     background: var(--dark-bg);
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .modal-content::-webkit-scrollbar-thumb {
     background: var(--primary-orange);
-    border-radius: 4px;
+    border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--blood-red);
 }
 
 .modal-close {
@@ -1001,20 +1052,22 @@ body.light-mode .event-card:hover {
     background: none;
     border: none;
     color: var(--primary-orange);
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    z-index: 1;
 }
 
 .modal-close:hover {
     background: var(--primary-orange);
     color: white;
+    transform: rotate(90deg);
 }
 
 .modal-title {
@@ -1023,6 +1076,7 @@ body.light-mode .event-card:hover {
     color: var(--primary-orange);
     margin-bottom: 1.5rem;
     text-align: center;
+    padding-right: 2rem;
 }
 
 .modal-body {
@@ -1224,6 +1278,11 @@ body.light-mode .event-card:hover {
     50% { opacity: 0.8; }
 }
 
+@keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50px); }
+}
+
 @keyframes moon-glow {
     from { box-shadow: inset -10px -10px 0 rgba(0,0,0,0.1), 0 0 40px rgba(255, 255, 255, 0.3); }
     to { box-shadow: inset -10px -10px 0 rgba(0,0,0,0.1), 0 0 60px rgba(255, 255, 255, 0.5), 0 0 80px rgba(255, 255, 255, 0.2); }
@@ -1239,6 +1298,28 @@ body.light-mode .event-card:hover {
     25% { transform: translateY(-15px) rotate(5deg); }
     50% { transform: translateY(-10px) rotate(-3deg); }
     75% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes float-particles {
+    0% { 
+        transform: translateY(100vh) rotate(0deg); 
+        opacity: 0; 
+    }
+    10% { 
+        opacity: 0.6; 
+    }
+    90% { 
+        opacity: 0.6; 
+    }
+    100% { 
+        transform: translateY(-10px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+@keyframes pulse-bg {
+    from { opacity: 0.5; }
+    to { opacity: 0.8; }
 }
 
 @keyframes fly-realistic {
@@ -1290,7 +1371,7 @@ body.light-mode .event-card:hover {
     to { opacity: 0.3; }
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness - Enhanced */
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
@@ -1320,17 +1401,27 @@ body.light-mode .event-card:hover {
         padding: 1rem;
     }
     
+    /* Fixed mobile countdown layout */
     .countdown-timer {
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        justify-items: center;
+        max-width: 100%;
     }
     
     .time-unit {
         min-width: 70px;
-        padding: 1rem 0.8rem;
+        max-width: 80px;
+        padding: 1rem 0.5rem;
     }
     
     .time-number {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
+    }
+    
+    .time-label {
+        font-size: 0.7rem;
     }
     
     .cta-buttons {
@@ -1377,10 +1468,25 @@ body.light-mode .event-card:hover {
         height: 45px;
     }
     
+    /* Fixed modal positioning for mobile */
     .modal-content {
-        margin: 10% auto;
+        margin: 12% auto 8%;
         padding: 1.5rem;
         width: 95%;
+        max-height: 75vh;
+    }
+    
+    .modal-close {
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 32px;
+        height: 32px;
+        font-size: 1.5rem;
+    }
+    
+    .modal-title {
+        font-size: 1.5rem;
+        padding-right: 2.5rem;
     }
     
     .section {
@@ -1401,6 +1507,11 @@ body.light-mode .event-card:hover {
     .decoration {
         font-size: 1.5rem;
     }
+    
+    /* Mobile contact card icons - replaced emojis with better icons */
+    .contact-icon {
+        font-size: 2.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1417,32 +1528,35 @@ body.light-mode .event-card:hover {
         padding: 1.5rem 1rem;
     }
     
+    /* Ultra-compact countdown for small screens */
+    .countdown-timer {
+        gap: 0.3rem;
+    }
+    
     .time-unit {
         min-width: 60px;
-        padding: 0.8rem 0.6rem;
+        max-width: 70px;
+        padding: 0.8rem 0.4rem;
     }
     
     .time-number {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     
     .time-label {
-        font-size: 0.8rem;
-    }
-    
-    .event-card {
-        padding: 0;
+        font-size: 0.65rem;
     }
     
     .event-card > h3,
-    .event-card > .event-details,
-    .event-card > .event-btn {
+    .event-card > .event-details {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
     }
     
-    .event-card > .event-btn {
-        padding-bottom: 1.5rem;
+    .event-btn {
+        margin: 0 1.5rem 1.5rem;
+        width: calc(100% - 3rem);
+        padding: 0.7rem 1.2rem;
     }
     
     .contact-card {
@@ -1477,6 +1591,18 @@ body.light-mode .event-card:hover {
     
     .separator-text {
         font-size: 1rem;
+    }
+    
+    /* Further reduce modal size on very small screens */
+    .modal-content {
+        margin: 15% auto 10%;
+        padding: 1.2rem;
+        width: 96%;
+        max-height: 70vh;
+    }
+    
+    .contact-icon {
+        font-size: 2rem;
     }
 }
 
