@@ -447,80 +447,97 @@ function setupModalSystem() {
             title: '🧙‍♂️ Quidditch Game',
             registrationLink: 'https://forms.gle/MoUnUSerwcaEeLfN9',
             content: generateEventContent('Quidditch Game', {
-                time: '10:00 AM - 1:00 PM',
+                time: '10:30 AM - 1:30 PM',
                 prize: '₹1000',
                 description: 'Experience the magical sport of Quidditch in real life! Teams will compete in this exciting game of strategy and skill.',
                 rules: [
-                    'Teams of 7 players each',
-                    'No actual flying involved (safety first!)',
-                    'Mix of running, strategy, and ball handling',
-                    'Fair play and sportsmanship required'
+                    'Teams of 5 players (2 Keepers + 3 Chasers).',
+                    'No actual flying – safety first!',
+                    'Best of 5 goals or most points in 5 mins.',
+                    'Fair play and sportsmanship required.'
                 ],
-                requirements: ['Comfortable athletic wear', 'Team registration required', 'Age limit: 16-25 years']
+
+                requirements: [
+                    'One registration per team (5 players).',
+                    'Arrive on time with proper sports attire.',
+                    'No physical harm or foul play allowed.'
+                ],
+                venue : 'IT Block Lawn'
             })
         },
         'treasure-hunt': {
             title: '🗺️ Treasure Hunt',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLScY9cF6NLQ2TL2Wga_bxsvNmQqGEGSX94KsKWC9_Qh-Ov9iPw/viewform?usp=header',
             content: generateEventContent('Treasure Hunt', {
                 time: '10:00 AM - 12:30 PM',
-                prize: '₹1000',
+                prize: '₹1200',
                 description: 'Follow mysterious clues across the campus to uncover hidden treasures. A test of wit, teamwork, and perseverance.',
                 rules: [
-                    'Teams of 3-4 members',
+                    'Teams of 4 members',
                     'All clues must be solved in sequence',
                     'No internet or phone assistance',
                     'First team to find final treasure wins'
                 ],
-                requirements: ['Registration deadline: Day before event', 'Team captain must be present', 'Wear comfortable walking shoes']
+                requirements: ['Registration deadline: Day before event', 'Team captain must be present'],
+                venue : 'IT Block Lawn and Whole Campus'
             })
         },
         'valorant-knockout': {
             title: '🎮 Valorant Knockout',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLScY9cF6NLQ2TL2Wga_bxsvNmQqGEGSX94KsKWC9_Qh-Ov9iPw/viewform?usp=header',
             content: generateEventContent('Valorant Tournament', {
                 time: '10:00 AM - 4:30 PM',
-                prize: '₹1200',
+                prize: '₹1000',
                 description: 'Show your tactical FPS skills in this intense Valorant tournament. Clutch or kick mentality required!',
                 rules: [
-                    '5v5 team matches',
-                    'Best of 3 rounds in eliminations',
-                    'Standard competitive rules apply',
-                    'No cheating or exploits allowed'
+                    'Type: Knockout (Single Elimination only 1 match per round)',
+                    'Match Mode: Custom Unrated (Standard)',
+                    'Win Condition: First to 13 rounds (If 12-12 → Sudden Death decides winner)'
                 ],
-                requirements: ['Own gaming setup or laptop', 'Stable internet connection', 'Valorant account required', 'Team of 5 players']
+                requirements: ['Use only registered accounts',
+                                'No cheating or smurfing',
+                                'No abusive or toxic behavior',
+                                'Rule violations lead to disqualification'],
+                venue : 'ITE Block - 208/311 Labs'
             })
         },
         'potion-matching': {
             title: '🧪 Potion Matching',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSdiI8BBsGx68kNoe0Fy3VuTQdzYz6Ls75mWq-oOYY0pKe0D0A/viewform?usp=header',
             content: generateEventContent('Potion Matching Game', {
-                time: '10:00 AM onwards',
+                time: '11:00 AM onwards',
                 prize: 'Fun & Entertainment',
                 description: 'Test your memory and observation skills in this magical potion matching game. Can you remember the mysterious ingredients?',
                 rules: [
-                    'Individual participation',
-                    'Match potion ingredients correctly',
-                    'Time limits apply for each round',
-                    'Multiple difficulty levels available'
-                ],
-                requirements: ['Sharp memory', 'Quick reflexes', 'No registration required', 'All ages welcome']
+                'Teams must have 2 members',
+                'One participant will guide, the other will match without seeing',
+                'Unlimited registrations allowed'],
+                requirements : ['None'],
+                venue : 'IT Block - Room 306 '
             })
+
         },
         'blindfolded-typing': {
             title: '⌨️ Blindfolded Typing Test',
+            registrationLink : 'https://forms.gle/11jU7mqWuYRBq1Ft5',
             content: generateEventContent('Blindfolded Typing Challenge', {
-                time: '11:00 AM - 4:30 PM',
+                time: '10:00 AM - 2:30 PM',
                 prize: 'Bragging Rights & Certificates',
                 description: 'Type what you hear while blindfolded. A true test of your typing skills and auditory focus.',
                 rules: [
-                    'Individual competition',
-                    'No peeking allowed',
-                    'Accuracy more important than speed',
-                    'Different difficulty levels'
+                    'Individual participation only',
+                    'Blindfolds will be provided',
+                    'Dictation will be the same for all participants',
+                    'Judging based on accuracy, speed & creativity of errors'
                 ],
-                requirements: ['Basic typing skills', 'Good hearing', 'Steady nerves', 'Comfortable with blindfolds']
+                requirements : ['None'],
+                venue : 'IT Block - 303 & 304 Labs'
             })
+
         },
         'memory-game': {
             title: '🧠 Memory Challenge',
+            registrationLink : 'https://forms.gle/PMEpFnGq8N3ppT7Z8',
             content: generateEventContent('Memory Game', {
                 time: '11:00 AM - 4:30 PM',
                 prize: 'Mental Satisfaction & Prizes',
@@ -528,41 +545,44 @@ function setupModalSystem() {
                 rules: [
                     'Individual participation',
                     'Progressive difficulty levels',
-                    'No external aids allowed',
-                    'Three strikes and you\'re out'
+                    'No external aids allowed'
                 ],
-                requirements: ['Sharp memory', 'Concentration skills', 'Patience', 'Competitive spirit']
+                requirements : ['None'],
+                venue : 'IT Block - Rooms 205 & 206'
             })
         },
         'movie-day-one': {
-            title: '🎬 Movie Screening',
+            title: '🎬 Yeh Jawaani Hai Deewani',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSfHKywIcYbj31Y5VN2_i_G9exJ6aKh4MR8w2HJuLHRQvqeRXA/viewform?usp=dialog',
             content: generateEventContent('Movie Day', {
-                time: '10:00 AM - 4:30 PM',
+                time: '11:00 AM - 1:30 PM',
                 prize: 'Entertainment & Relaxation',
-                description: 'Relax and enjoy carefully selected movies with friends. Perfect for taking a break between other activities.',
+                description: 'A fun, adventurous journey of friendship, love, and chasing dreams.',
                 rules: [
                     'Open to all attendees',
                     'Maintain silence during screening',
                     'No outside food/drinks',
                     'Respect other viewers'
                 ],
-                requirements: ['No registration needed', 'Just bring yourself', 'Comfortable seating provided', 'Popcorn available for purchase']
+                requirements: ['Mute your phones', 'present 5 min before movie starts','don\'t walk in/out during movie'],
+                venue : 'Edusat Hall'
             })
         },
         'movie-day-two': {
-            title: '🎬 Movie Screening',
+            title: '🎬 Lights Out',
             registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSfExWAwFi0WIbgJb54K6_nQNQenJGkuEBIKwCu4L_SmpA8Djw/viewform?usp=header',
             content: generateEventContent('Movie Day', {
-                time: '10:00 AM - 4:30 PM',
+                time: '11:00 AM - 1:30 PM',
                 prize: 'Entertainment & Relaxation',
-                description: 'Relax and enjoy carefully selected movies with friends. Perfect for taking a break between other activities.',
+                description: 'A family is terrorized by a sinister entity that attacks when the lights go out',
                 rules: [
                     'Open to all attendees',
                     'Maintain silence during screening',
                     'No outside food/drinks',
                     'Respect other viewers'
                 ],
-                requirements: ['No registration needed', 'Just bring yourself', 'Comfortable seating provided', 'Popcorn available for purchase']
+                requirements: ['Mute your phones', 'present 5 min before movie starts','don\'t walk in/out during movie'],
+                venue : 'Edusat Hall'
             })
         },
         'valorant-finals': {
@@ -577,7 +597,8 @@ function setupModalSystem() {
                     'Professional tournament format',
                     'Live commentary and streaming'
                 ],
-                requirements: ['Qualification from Day 1 required', 'High-level gameplay expected', 'Mental preparation essential']
+                requirements: ['Qualification from Day 1 required', 'High-level gameplay expected', 'Mental preparation essential'],
+                venue : 'IT Block 208/311 Lab'
             })
         },
         'relay-games': {
@@ -588,62 +609,93 @@ function setupModalSystem() {
                 prize: '₹1000',
                 description: 'Multiple fun relay challenges that test teamwork, speed, and coordination. Perfect team bonding activity.',
                 rules: [
-                    'Teams of 6-8 members',
-                    'Multiple relay stations',
-                    'All team members must participate',
-                    'Fastest completion wins'
+                    'Teams must have exactly 5 members.',
+                    'All tasks are completed in relay format.',
+                    'Teamwork, creativity, and coordination matter more than speed.',
+                    'Multiple relay stations.',
+                    'All team members must participate.',
+                    'Fastest completion wins.'
                 ],
-                requirements: ['Athletic wear recommended', 'Team registration required', 'High energy and enthusiasm']
+
+               requirements: [
+                    'All team members must register.',
+                    'Arrive 10 mins before start.',
+                    'No outside help or devices.'
+            ],
+                venue : 'Gallery'
             })
         },
         'poster-making': {
             title: '🎨 Poster Making',
+            registrationLink : 'https://forms.gle/5u4B4Kx8uCzCQyxF9',
             content: generateEventContent('Creative Poster Competition', {
-                time: '11:00 AM - 1:00 PM',
+                time: '12:00 PM - 1:30 PM',
                 prize: '₹600',
                 description: 'Create spine-chilling Halloween-themed posters. Let your artistic creativity run wild with spooky themes.',
                 rules: [
-                    'Individual or pair participation',
-                    'Halloween theme mandatory',
-                    'All materials provided',
-                    'Original artwork only'
+                    'Prompt revealed at event start',
+                    'Design posters in Canva; templates allowed',
+                    'Originality & creativity prioritized',
+                    'Submit in specified format (PNG/PDF)'
                 ],
-                requirements: ['Artistic skills helpful but not mandatory', 'Creative mindset', 'Halloween theme knowledge']
+                requirements: [
+                'Team of 2 members',
+                'Bring your own laptop',
+                'Creative mindset; artistic skills helpful but not mandatory',
+                'Know the Halloween theme',
+                'No AI tools; maintain professionalism'
+                ],
+                venue : 'IT Block 305/306 Room'
             })
         },
         'escape-room-day-two': {
             title: '🔓 Escape Room Challenge',
+            registrationLink : 'https://forms.gle/FcZoBtDEoe4PtGmp8',
             content: generateEventContent('Escape Room Experience', {
-                time: '12:00 PM - 1:30 PM & 1:30 PM - 4:30 PM',
+                time: '12:00 PM - 1:30 PM',
                 prize: '₹1000',
                 description: 'Work together to solve puzzles and escape before time runs out. Multiple themed rooms with different difficulty levels.',
                 rules: [
-                    'Teams of 4-6 players',
-                    '45-minute time limit per room',
-                    'No external help allowed',
-                    'Teamwork is essential'
+                    'Teams must have 3 members.',
+                    'Respect volunteers; arguing may lead to disqualification.',
+                    'Solve puzzles calmly; aggressive behavior leads to disqualification.',
+                    'Handle props carefully.',
+                    'Follow instructions; they won’t be repeated.'
                 ],
-                requirements: ['Problem-solving skills', 'Team coordination', 'No claustrophobia', 'Reservation required']
+
+                requirements: [
+                    'Each team must register before the game.',
+                    'All members must be present on time.',
+                    'No outside help or mobile devices allowed.'
+                ],
+                venue : 'IT Block 201,202,203,204,205 Rooms'
             })
         },
         'movie-trivia': {
             title: '🎭 Movie Trivia',
             registrationLink : 'https://forms.gle/eiybK5vrvoBpJg5e9',
             content: generateEventContent('Horror Movie Trivia', {
-                time: '1:30 PM - 2:30 PM',
+                time: '10:00 PM - 11:00 PM',
                 prize: 'Knowledge & Fun',
                 description: 'Test your horror movie knowledge in this spine-tingling trivia session. From classics to modern scares.',
                 rules: [
-                    'Individual or team participation',
-                    'Multiple choice and open questions',
-                    'Horror movie focus',
-                    'No phone/internet assistance'
+                    'You’ll be shown fun clues like emoji puzzles, mysterious scenes, or iconic characters.',
+                    'Guess the correct movie based on the clues.',
+                    'Work as a team to discuss and answer.',
+                    'No use of mobile phones or external help.'
                 ],
-                requirements: ['Horror movie knowledge', 'Quick thinking', 'Competitive spirit', 'Love for cinema']
+
+                requirements: [
+                    'Teams of 2 members.',
+                    'All members must register before the game.',
+                    'Arrive on time and be ready to participate.'
+                ],
+                venue : 'Edusat Hall'
             })
         },
         'costume-party': {
             title: '👻 Grand Costume Party',
+            registrationLink : 'https://forms.gle/mq6PA1p8aUFdZK3H9',
             content: generateEventContent('Halloween Costume Contest', {
                 time: '2:30 PM - 6:00 PM',
                 prize: '₹1200',
@@ -654,7 +706,8 @@ function setupModalSystem() {
                     'Stage performance encouraged',
                     'Appropriate costumes only'
                 ],
-                requirements: ['Creative costume', 'Confidence to perform', 'Halloween spirit', 'Registration at venue']
+                requirements: ['Creative costume', 'Confidence to perform', 'Halloween spirit'],
+                venue : 'Edusat Hall'
             })
         }
     };
@@ -720,7 +773,6 @@ function generateEventContent(title, details) {
                 ${details.requirements.map(req => `<li>${req}</li>`).join('')}
             </ul>
         </div>
-        <p><strong>📞 Contact:</strong> Event Coordinators - Check contact section</p>
     `;
 }
 
