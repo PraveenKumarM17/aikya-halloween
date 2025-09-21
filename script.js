@@ -445,6 +445,7 @@ function setupModalSystem() {
     const eventDetails = {
         'quidditch-game': {
             title: '🧙‍♂️ Quidditch Game',
+            registrationLink: 'https://forms.gle/MoUnUSerwcaEeLfN9',
             content: generateEventContent('Quidditch Game', {
                 time: '10:00 AM - 1:00 PM',
                 prize: '₹1000',
@@ -548,6 +549,22 @@ function setupModalSystem() {
                 requirements: ['No registration needed', 'Just bring yourself', 'Comfortable seating provided', 'Popcorn available for purchase']
             })
         },
+        'movie-day-two': {
+            title: '🎬 Movie Screening',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSfExWAwFi0WIbgJb54K6_nQNQenJGkuEBIKwCu4L_SmpA8Djw/viewform?usp=header',
+            content: generateEventContent('Movie Day', {
+                time: '10:00 AM - 4:30 PM',
+                prize: 'Entertainment & Relaxation',
+                description: 'Relax and enjoy carefully selected movies with friends. Perfect for taking a break between other activities.',
+                rules: [
+                    'Open to all attendees',
+                    'Maintain silence during screening',
+                    'No outside food/drinks',
+                    'Respect other viewers'
+                ],
+                requirements: ['No registration needed', 'Just bring yourself', 'Comfortable seating provided', 'Popcorn available for purchase']
+            })
+        },
         'valorant-finals': {
             title: '🏆 Valorant Finals',
             content: generateEventContent('Valorant Championship Finals', {
@@ -565,6 +582,7 @@ function setupModalSystem() {
         },
         'relay-games': {
             title: '🏃‍♂️ Relay Games',
+            registrationLink : 'https://forms.gle/71qkstAYBKrjrcbF6',
             content: generateEventContent('Team Relay Challenge', {
                 time: '10:30 AM - 12:00 PM',
                 prize: '₹1000',
@@ -610,6 +628,7 @@ function setupModalSystem() {
         },
         'movie-trivia': {
             title: '🎭 Movie Trivia',
+            registrationLink : 'https://forms.gle/eiybK5vrvoBpJg5e9',
             content: generateEventContent('Horror Movie Trivia', {
                 time: '1:30 PM - 2:30 PM',
                 prize: 'Knowledge & Fun',
@@ -713,14 +732,26 @@ function openModal(eventData, modal, modalTitle, modalContent) {
         modal.style.display = 'block';
         modal.style.animation = 'fadeIn 0.3s ease';
         document.body.style.overflow = 'hidden';
-        
-        // Add focus to close button for accessibility
+
+        // Set registration button dynamically
+        const registrationBtn = modal.querySelector('.modal-btn');
+        if (registrationBtn) {
+            if (eventData.registrationLink) {
+                registrationBtn.style.display = 'block'; // show button
+                registrationBtn.onclick = () => window.open(eventData.registrationLink, '_blank');
+            } else {
+                registrationBtn.style.display = 'none'; // hide if no link
+            }
+        }
+
+        // Focus close button for accessibility
         setTimeout(() => {
             const closeBtn = modal.querySelector('.modal-close');
             if (closeBtn) closeBtn.focus();
         }, 100);
     }
 }
+
 
 // Enhanced scroll elements with smooth animations
 function setupScrollElements() {
