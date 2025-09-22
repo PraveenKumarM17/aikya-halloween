@@ -465,21 +465,24 @@ function setupModalSystem() {
         },
         'valorant-knockout': {
             title: '🎮 Valorant Knockout',
-            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLScY9cF6NLQ2TL2Wga_bxsvNmQqGEGSX94KsKWC9_Qh-Ov9iPw/viewform?usp=header',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSdt0OkuDsm0Q2Yi-y-YzAqenQucZZbFqbOWS3pqbybMXSgatA/viewform',
             content: generateEventContent('Valorant Tournament', {
                 time: '10:00 AM - 4:30 PM',
                 prize: '₹1000',
                 description: 'Show your tactical FPS skills in this intense Valorant tournament. Clutch or kick mentality required!',
                 rules: [
-                    'Type: Knockout (Single Elimination only 1 match per round)',
-                    'Match Mode: Custom Unrated (Standard)',
-                    'Win Condition: First to 13 rounds (If 12-12 → Sudden Death decides winner)'
+                    'Use only registered accounts',
+                    'No cheating or smurfing',
+                    'No abusive or toxic behavior',
+                    'Rule violations lead to disqualification'
                 ],
-                requirements: ['Use only registered accounts',
-                                'No cheating or smurfing',
-                                'No abusive or toxic behavior',
-                                'Rule violations lead to disqualification'],
-                venue : 'ITE Block - 208/311 Labs'
+                requirements: [
+                    "Participants are required to carry their **OWN LAPTOPS, CHARGER, MOUSE, HEADSET**",
+                    "**Ethernet Connection** will be **provided** (Laptops without **Ethernet Jack** are **not recommended**, **WIFI connection is Slow**)",
+                    "**Valorant** should be **UPDATED** before the match"
+                    ],
+
+                venue : 'IT Block - 208 Labs'
             })
         },
         'potion-matching': {
@@ -568,18 +571,23 @@ function setupModalSystem() {
         },
         'valorant-finals': {
             title: '🏆 Valorant Finals',
-            content: generateEventContent('Valorant Championship Finals', {
-                time: '9:00 AM - 4:30 PM',
-                prize: 'TBA - Grand Championship',
-                description: 'The ultimate showdown between the best teams. Winner takes all in this epic finale.',
+            registrationLink : 'https://docs.google.com/forms/d/e/1FAIpQLSdt0OkuDsm0Q2Yi-y-YzAqenQucZZbFqbOWS3pqbybMXSgatA/viewform',
+            content: generateEventContent('Valorant Tournament', {
+                time: '10:00 AM - 4:30 PM',
+                prize: '₹1000',
+                description: 'Show your tactical FPS skills in this intense Valorant tournament. Clutch or kick mentality required!',
                 rules: [
-                    'Only qualified teams from Day 1',
-                    'Best of 5 matches',
-                    'Professional tournament format',
-                    'Live commentary and streaming'
+                    'Use only registered accounts',
+                    'No cheating or smurfing',
+                    'No abusive or toxic behavior',
+                    'Rule violations lead to disqualification'
                 ],
-                requirements: ['Qualification from Day 1 required', 'High-level gameplay expected', 'Mental preparation essential'],
-                venue : 'IT Block 208/311 Lab'
+                requirements: [
+                    "Participants are required to carry their <b>OWN LAPTOPS, CHARGER, MOUSE, HEADSET</b>",
+                    "<b>Ethernet Connection</b> will be <b>provided</b> (Laptops without <b>Ethernet Jack</b> are <b>not recommended</b>, <b>WIFI connection is Slow</b>)",
+                    "<b>Valorant</b> should be <b>UPDATED</b> before the match"
+                ],
+                venue : 'IT Block - 208 Labs'
             })
         },
         'relay-games': {
