@@ -1456,7 +1456,7 @@ body.light-mode .event-card:hover {
 }
 
 /* Mobile Responsiveness - Enhanced */
-@media (max-width: 768px) {
+@media (max-width: 768px)   {
     .container {
         padding: 0 1rem;
     }
@@ -1535,6 +1535,7 @@ body.light-mode .event-card:hover {
     .events-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        margin: 2rem 0;
     }
     
     .contact-grid {
@@ -1609,6 +1610,18 @@ body.light-mode .event-card:hover {
     /* Mobile contact card icons */
     .contact-icon {
         font-size: 2.5rem;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .event-card {
+        width: 100%;
+        max-width: none;
+        margin: 0 auto;
     }
 }
 
