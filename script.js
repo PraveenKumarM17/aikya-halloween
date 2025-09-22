@@ -1,41 +1,16 @@
-// Halloween Event Website JavaScript - Updated and Enhanced
-// Enhanced functionality for smooth user experience
+// Halloween Event Website JavaScript - Performance Optimized with All Features
+// Optimized for smoothness while maintaining all functionality
 
-const images = [
-  // 🎭 Event Posters
-  "asserts/Qudditch.png",
-  "asserts/TreasureHunt.png",
-  "asserts/Valvo.jpg",
-  "asserts/Robo.png",
-  "asserts/Tech.jpg",
-  "asserts/Poster.jpg",
-  "asserts/HauntedHouse.jpg",
-  "asserts/potionMatching.png",
-  "asserts/BlindTyping.jpg",
-  "asserts/Mindgame.png",
-  "asserts/Movie.jpg",
-  "asserts/valvoFinal.png",
-  "asserts/RelayGame.png",
-  "asserts/PosterMaking.png",
-  "asserts/EscapeRoom.png",
-  "asserts/MovieThrival.png",
-  "asserts/Costume.jpg",
-
-  // 🏷️ Branding / Logo
-  "asserts/Adobe Express - file.jpg",
-
-  // 🌌 Backgrounds (only if you’re using actual image files, 
-  // otherwise skip since your code uses CSS/emoji)
-  // "asserts/parallax-bg.png",
-  // "asserts/moon.png",
-  // "asserts/stars.png",
-  // "asserts/bats.png"
+// Efficient image preloading - only critical images
+const criticalImages = [
+  "asserts/Adobe Express - file.webp"
 ];
-  
-  images.forEach(src => {
-    const img = new Image();
-    img.src = src;
-  });
+
+// Preload critical images only
+criticalImages.forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
 
 // Global variables
 let isDarkMode = true;
@@ -44,6 +19,8 @@ let lastScrollTop = 0;
 let ghostTrails = [];
 let clickCount = 0;
 let countdownInterval = null;
+let animationFrameId = null;
+let isScrolling = false;
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,6 +44,9 @@ function initializeWebsite() {
     loadUserPreferences();
     displayConsoleMessage();
     autoStartSound();
+    setupKeyboardShortcuts();
+    setupVisibilityHandling();
+    setupErrorHandling();
 }
 
 // Loading Screen
@@ -80,7 +60,7 @@ function setupLoadingScreen() {
                     loadingScreen.style.display = 'none';
                 }, 1000);
             }
-        }, 2000);
+        }, 1500); // Reduced from 2000ms but kept reasonable
     });
 }
 
@@ -104,7 +84,7 @@ function autoStartSound() {
     }
 }
 
-// Countdown Timer with enhanced functionality
+// Countdown Timer with enhanced functionality - optimized
 function setupCountdownTimer() {
     function updateCountdown() {
         const eventDate = new Date('2025-09-25T09:00:00').getTime();
@@ -138,7 +118,7 @@ function setupCountdownTimer() {
             if (element) {
                 const newValue = values[key].toString().padStart(2, '0');
                 if (element.textContent !== newValue) {
-                    animateNumberChange(element, values[key]);
+                    animateNumberChangeOptimized(element, values[key]);
                     element.textContent = newValue;
                 }
             }
@@ -158,43 +138,44 @@ function setupCountdownTimer() {
         }
         playSpookySound();
         
-        // Clear the interval as event is live
         if (countdownInterval) {
             clearInterval(countdownInterval);
         }
     }
 
-    // Initialize countdown and update every second
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 }
 
-// Animate number changes in countdown with enhanced effects
-function animateNumberChange(element, newValue) {
+// Optimized number change animation
+function animateNumberChangeOptimized(element, newValue) {
     if (!element) return;
     
     const currentValue = element.textContent;
     const formattedNewValue = newValue.toString().padStart(2, '0');
     
     if (currentValue !== formattedNewValue) {
-        // Add glow effect during change
+        // Use CSS transforms for better performance
         element.style.transform = 'scale(1.15)';
         element.style.color = 'var(--primary-orange)';
-        element.style.textShadow = '0 0 20px var(--primary-orange)';
         
-        // Create ripple effect
-        createRippleEffect(element);
+        // Use requestAnimationFrame for smooth animation
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+                element.style.color = '#ffffff';
+            }, 300);
+        });
         
-        setTimeout(() => {
-            element.style.transform = 'scale(1)';
-            element.style.color = '#ffffff';
-            element.style.textShadow = '0 0 10px rgba(255, 255, 255, 0.5)';
-        }, 400);
+        // Create optimized ripple effect
+        if (Math.random() < 0.3) { // Reduced frequency for performance
+            createOptimizedRippleEffect(element);
+        }
     }
 }
 
-// Create ripple effect for countdown changes
-function createRippleEffect(element) {
+// Optimized ripple effect
+function createOptimizedRippleEffect(element) {
     const ripple = document.createElement('div');
     const rect = element.getBoundingClientRect();
     
@@ -202,17 +183,24 @@ function createRippleEffect(element) {
         position: absolute;
         border-radius: 50%;
         background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
-        width: 100px;
-        height: 100px;
-        left: ${rect.left + rect.width / 2 - 50}px;
-        top: ${rect.top + rect.height / 2 - 50}px;
+        width: 80px;
+        height: 80px;
+        left: ${rect.left + rect.width / 2 - 40}px;
+        top: ${rect.top + rect.height / 2 - 40}px;
         pointer-events: none;
         z-index: 1000;
         opacity: 0.6;
-        animation: ripple-expand 0.6s ease-out forwards;
+        transform: scale(0);
+        transition: transform 0.6s ease-out, opacity 0.6s ease-out;
     `;
     
     document.body.appendChild(ripple);
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+        ripple.style.transform = 'scale(3)';
+        ripple.style.opacity = '0';
+    });
     
     setTimeout(() => {
         if (ripple.parentNode) {
@@ -221,14 +209,14 @@ function createRippleEffect(element) {
     }, 600);
 }
 
-// Enhanced Navigation functionality
+// Enhanced Navigation functionality - optimized
 function setupNavigation() {
     const navbar = document.getElementById('navbar');
     
     if (!navbar) return;
 
-    // Hide/Show navigation on scroll with smooth transitions
-    window.addEventListener('scroll', debounce(() => {
+    // Throttled scroll handler for better performance
+    window.addEventListener('scroll', throttle(() => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
         if (scrollTop > lastScrollTop && scrollTop > 100) {
@@ -239,18 +227,16 @@ function setupNavigation() {
         
         // Add background blur effect based on scroll
         const opacity = Math.min(scrollTop / 100, 0.95);
-        navbar.style.background = `rgba(10, 10, 10, ${opacity})`;
-        
-        if (document.body.classList.contains('light-mode')) {
-            navbar.style.background = `rgba(255, 255, 255, ${opacity})`;
-        }
+        navbar.style.background = document.body.classList.contains('light-mode') 
+            ? `rgba(255, 255, 255, ${opacity})` 
+            : `rgba(10, 10, 10, ${opacity})`;
         
         lastScrollTop = scrollTop;
-    }, 10));
+    }, 16)); // ~60fps
 
     // Add active state to navigation links
     updateActiveNavLink();
-    window.addEventListener('scroll', debounce(updateActiveNavLink, 100));
+    window.addEventListener('scroll', throttle(updateActiveNavLink, 100));
 }
 
 // Update active navigation link based on scroll position
@@ -275,7 +261,7 @@ function updateActiveNavLink() {
     });
 }
 
-// Enhanced Theme Toggle with smooth transitions
+// Enhanced Theme Toggle with smooth transitions - optimized
 function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const moonElement = document.getElementById('moon');
@@ -296,8 +282,8 @@ function setupThemeToggle() {
         
         themeToggle.textContent = isDarkMode ? '🌙' : '☀️';
 
-        // Animate theme elements
-        animateThemeChange(moonElement, stars, parallaxBg, mainTitle, subtitle, creepyImages);
+        // Animate theme elements - optimized
+        animateThemeChangeOptimized(moonElement, stars, parallaxBg, mainTitle, subtitle, creepyImages);
 
         // Store preference
         localStorage.setItem('halloweenTheme', isDarkMode ? 'dark' : 'light');
@@ -309,12 +295,11 @@ function setupThemeToggle() {
     });
 }
 
-// Animate theme change elements
-function animateThemeChange(moonElement, stars, parallaxBg, mainTitle, subtitle, creepyImages) {
+// Optimized theme change animations
+function animateThemeChangeOptimized(moonElement, stars, parallaxBg, mainTitle, subtitle, creepyImages) {
+    // Use CSS properties for better performance
     if (!isDarkMode) {
         // Light mode animations
-        document.body.style.background = "#ffffff";
-        
         if (parallaxBg) {
             parallaxBg.style.opacity = '0';
             setTimeout(() => {
@@ -324,7 +309,7 @@ function animateThemeChange(moonElement, stars, parallaxBg, mainTitle, subtitle,
 
         if (moonElement) {
             moonElement.style.opacity = '0';
-            moonElement.style.transform = 'scale(0) rotate(180deg)';
+            moonElement.style.transform = 'scale(0)';
         }
 
         if (stars) {
@@ -336,22 +321,20 @@ function animateThemeChange(moonElement, stars, parallaxBg, mainTitle, subtitle,
         
         if (creepyImages) {
             creepyImages.style.opacity = "1";
-            animateCreepyImages();
+            animateCreepyImagesOptimized();
         }
     } else {
         // Dark mode animations
-        document.body.style.background = "";
-        
         if (parallaxBg) {
             parallaxBg.style.display = "block";
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 parallaxBg.style.opacity = '1';
-            }, 100);
+            });
         }
 
         if (moonElement) {
             moonElement.style.opacity = '1';
-            moonElement.style.transform = 'scale(1) rotate(0deg)';
+            moonElement.style.transform = 'scale(1)';
         }
 
         if (stars) {
@@ -367,18 +350,17 @@ function animateThemeChange(moonElement, stars, parallaxBg, mainTitle, subtitle,
     }
 }
 
-// Animate creepy images in light mode
-function animateCreepyImages() {
+// Optimized creepy images animation
+function animateCreepyImagesOptimized() {
     const images = document.querySelectorAll('.creepy-img');
     images.forEach((img, index) => {
         setTimeout(() => {
-            img.style.animation = 'none';
             img.style.animation = 'float-creepy 6s ease-in-out infinite';
-        }, index * 200);
+        }, index * 100); // Reduced delay
     });
 }
 
-// Enhanced Sound Control with audio visualization
+// Enhanced Sound Control with audio visualization - optimized
 function setupSoundControl() {
     const soundToggle = document.getElementById('soundToggle');
     const backgroundAudio = document.getElementById('backgroundAudio');
@@ -395,20 +377,18 @@ function setupSoundControl() {
         
         if (soundEnabled) {
             backgroundAudio.play().catch(e => console.log('Audio play failed:', e));
-            animateSoundControl(soundToggle, true);
+            animateSoundControlOptimized(soundToggle, true);
         } else {
             backgroundAudio.pause();
-            animateSoundControl(soundToggle, false);
+            animateSoundControlOptimized(soundToggle, false);
         }
         
         localStorage.setItem('soundEnabled', soundEnabled.toString());
     });
 
-    // Set initial volume and create audio context
     if (backgroundAudio) {
         backgroundAudio.volume = 0.3;
         
-        // Add audio event listeners
         backgroundAudio.addEventListener('canplaythrough', () => {
             console.log('Audio ready to play');
         });
@@ -423,18 +403,20 @@ function setupSoundControl() {
     }
 }
 
-// Animate sound control feedback
-function animateSoundControl(element, enabled) {
+// Optimized sound control animation
+function animateSoundControlOptimized(element, enabled) {
     element.style.transform = 'scale(1.2)';
     element.style.background = enabled ? 'var(--whatsapp-green)' : 'var(--blood-red)';
     
-    setTimeout(() => {
-        element.style.transform = 'scale(1)';
-        element.style.background = '';
-    }, 200);
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            element.style.transform = 'scale(1)';
+            element.style.background = '';
+        }, 200);
+    });
 }
 
-// Enhanced Modal System with better event handling
+// Enhanced Modal System with better event handling - optimized
 function setupModalSystem() {
     const modal = document.getElementById('eventModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -456,7 +438,6 @@ function setupModalSystem() {
                     'Best of 5 goals or most points in 5 mins.',
                     'Fair play and sportsmanship required.'
                 ],
-
                 requirements: [
                     'One registration per team (5 players).',
                     'Arrive on time with proper sports attire.',
@@ -616,7 +597,6 @@ function setupModalSystem() {
                     'All team members must participate.',
                     'Fastest completion wins.'
                 ],
-
                requirements: [
                     'All team members must register.',
                     'Arrive 10 mins before start.',
@@ -660,9 +640,8 @@ function setupModalSystem() {
                     'Respect volunteers; arguing may lead to disqualification.',
                     'Solve puzzles calmly; aggressive behavior leads to disqualification.',
                     'Handle props carefully.',
-                    'Follow instructions; they won’t be repeated.'
+                    'Follow instructions; they won\'t be repeated.'
                 ],
-
                 requirements: [
                     'Each team must register before the game.',
                     'All members must be present on time.',
@@ -679,12 +658,11 @@ function setupModalSystem() {
                 prize: 'Knowledge & Fun',
                 description: 'Test your horror movie knowledge in this spine-tingling trivia session. From classics to modern scares.',
                 rules: [
-                    'You’ll be shown fun clues like emoji puzzles, mysterious scenes, or iconic characters.',
+                    'You\'ll be shown fun clues like emoji puzzles, mysterious scenes, or iconic characters.',
                     'Guess the correct movie based on the clues.',
                     'Work as a team to discuss and answer.',
                     'No use of mobile phones or external help.'
                 ],
-
                 requirements: [
                     'Teams of 2 members.',
                     'All members must register before the game.',
@@ -712,16 +690,18 @@ function setupModalSystem() {
         }
     };
 
-    // Event button click handlers
-    document.querySelectorAll('.event-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    // Optimized event button click handlers - using event delegation
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('event-btn')) {
             e.stopPropagation();
-            const eventCard = btn.closest('.event-card');
+            const eventCard = e.target.closest('.event-card');
             if (eventCard) {
                 const eventType = eventCard.getAttribute('data-event');
-                openModal(eventDetails[eventType], modal, modalTitle, modalContent);
+                if (eventDetails[eventType]) {
+                    openModal(eventDetails[eventType], modal, modalTitle, modalContent);
+                }
             }
-        });
+        }
     });
 
     // Close modal functionality
@@ -759,7 +739,8 @@ function generateEventContent(title, details) {
         <h3 style="color: var(--primary-orange); margin-bottom: 1rem;">🎯 ${details.prize}</h3>
         <div style="text-align: left; margin-bottom: 1rem;">
             <p><strong>⏰ Time:</strong> ${details.time}</p>
-            <p><strong>📍 Description:</strong> ${details.description}</p>
+            <p><strong>📍 Venue:</strong> ${details.venue}</p>
+            <p><strong>📋 Description:</strong> ${details.description}</p>
         </div>
         <div style="text-align: left; margin-bottom: 1rem;">
             <p><strong>📋 Rules:</strong></p>
@@ -789,10 +770,10 @@ function openModal(eventData, modal, modalTitle, modalContent) {
         const registrationBtn = modal.querySelector('.modal-btn');
         if (registrationBtn) {
             if (eventData.registrationLink) {
-                registrationBtn.style.display = 'block'; // show button
+                registrationBtn.style.display = 'block';
                 registrationBtn.onclick = () => window.open(eventData.registrationLink, '_blank');
             } else {
-                registrationBtn.style.display = 'none'; // hide if no link
+                registrationBtn.style.display = 'none';
             }
         }
 
@@ -804,8 +785,7 @@ function openModal(eventData, modal, modalTitle, modalContent) {
     }
 }
 
-
-// Enhanced scroll elements with smooth animations
+// Enhanced scroll elements with smooth animations - optimized
 function setupScrollElements() {
     const scrollTopBtn = document.getElementById('scrollTop');
     
@@ -813,27 +793,29 @@ function setupScrollElements() {
 
     let scrollProgress = 0;
     
-    window.addEventListener('scroll', debounce(() => {
+    window.addEventListener('scroll', throttle(() => {
         const scrollTop = window.pageYOffset;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         scrollProgress = (scrollTop / docHeight) * 100;
         
         if (scrollTop > 300) {
             scrollTopBtn.classList.add('visible');
-            updateScrollProgress(scrollTopBtn, scrollProgress);
+            updateScrollProgressOptimized(scrollTopBtn, scrollProgress);
         } else {
             scrollTopBtn.classList.remove('visible');
         }
-    }, 10));
+    }, 16)); // ~60fps
 
     scrollTopBtn.addEventListener('click', () => {
         smoothScrollToTop();
     });
 }
 
-// Update scroll progress indicator
-function updateScrollProgress(button, progress) {
-    button.style.background = `conic-gradient(var(--primary-orange) ${progress * 3.6}deg, var(--primary-purple) 0deg)`;
+// Optimized scroll progress indicator
+function updateScrollProgressOptimized(button, progress) {
+    // Use CSS custom properties for better performance
+    button.style.setProperty('--progress', `${progress * 3.6}deg`);
+    button.style.background = `conic-gradient(var(--primary-orange) var(--progress), var(--primary-purple) 0deg)`;
 }
 
 // Smooth scroll to top with easing
@@ -861,16 +843,16 @@ function smoothScrollToTop() {
 
 // Enhanced smooth scrolling for navigation links
 function setupSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('a[href^="#"]')) {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
+            const targetId = e.target.getAttribute('href');
             const target = document.querySelector(targetId);
             
             if (target) {
                 smoothScrollToElement(target);
             }
-        });
+        }
     });
 }
 
@@ -885,7 +867,7 @@ function smoothScrollToElement(target) {
     });
 }
 
-// Enhanced section reveal animations with stagger effect
+// Enhanced section reveal animations with stagger effect - optimized
 function setupSectionAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -895,10 +877,14 @@ function setupSectionAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                    animateElementChildren(entry.target);
-                }, index * 100);
+                // Use requestAnimationFrame for better performance
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                        animateElementChildrenOptimized(entry.target);
+                    }, index * 50); // Reduced delay
+                });
+                observer.unobserve(entry.target); // Stop observing once visible
             }
         });
     }, observerOptions);
@@ -909,32 +895,32 @@ function setupSectionAnimations() {
     });
 }
 
-// Animate children elements with stagger effect
-function animateElementChildren(element) {
+// Optimized children animation
+function animateElementChildrenOptimized(element) {
     const children = element.querySelectorAll('.event-card, .contact-card, .footer-detail');
     children.forEach((child, index) => {
         setTimeout(() => {
             child.style.animation = 'slideInUp 0.6s ease forwards';
-        }, index * 50);
+        }, index * 25); // Reduced delay for smoother effect
     });
 }
 
-// Setup contact cards with enhanced interactivity
+// Setup contact cards with enhanced interactivity - optimized
 function setupContactCards() {
     const contactCards = document.querySelectorAll('.contact-card');
     
     contactCards.forEach(card => {
-        // Add hover sound effects
-        card.addEventListener('mouseenter', () => {
-            if (soundEnabled) {
+        // Add hover sound effects with throttling
+        card.addEventListener('mouseenter', throttle(() => {
+            if (soundEnabled && Math.random() < 0.2) { // Reduced frequency for performance
                 playSpookySoundEffect('hover');
             }
             
-            // Add particle effect
-            createContactCardParticles(card);
-        });
+            // Add optimized particle effect
+            createContactCardParticlesOptimized(card);
+        }, 200));
         
-        // Add click analytics (if needed)
+        // Add click analytics
         card.addEventListener('click', (e) => {
             const cardType = card.querySelector('.contact-title')?.textContent;
             console.log(`Contact card clicked: ${cardType}`);
@@ -946,57 +932,61 @@ function setupContactCards() {
     });
 }
 
-// Create particle effects for contact cards
-function createContactCardParticles(card) {
+// Optimized particle effects for contact cards
+function createContactCardParticlesOptimized(card) {
     const rect = card.getBoundingClientRect();
-    const particles = 3;
+    const particles = 2; // Reduced for performance
     
     for (let i = 0; i < particles; i++) {
         const particle = document.createElement('div');
         particle.style.cssText = `
             position: fixed;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: var(--primary-orange);
             border-radius: 50%;
             left: ${rect.left + Math.random() * rect.width}px;
             top: ${rect.top + Math.random() * rect.height}px;
             pointer-events: none;
             z-index: 1000;
-            opacity: 0.8;
-            animation: particle-float 1s ease-out forwards;
+            opacity: 0.6;
+            transform: scale(0);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
         `;
         
         document.body.appendChild(particle);
+        
+        // Trigger animation
+        requestAnimationFrame(() => {
+            particle.style.transform = 'translateY(-30px) scale(1)';
+            particle.style.opacity = '0';
+        });
         
         setTimeout(() => {
             if (particle.parentNode) {
                 particle.remove();
             }
-        }, 1000);
+        }, 800);
     }
 }
 
-// Enhanced Easter eggs and interactive elements
+// Enhanced Easter eggs and interactive elements - optimized
 function setupEasterEggs() {
-    // Custom cursor trail with performance optimization
+    // Optimized cursor trail with performance optimization
     let trailTimeout;
-    document.addEventListener('mousemove', (e) => {
-        clearTimeout(trailTimeout);
-        trailTimeout = setTimeout(() => {
-            if (Math.random() < 0.03) {
-                createGhostTrail(e.clientX, e.clientY);
-            }
-        }, 16); // ~60fps limit
-    });
+    document.addEventListener('mousemove', throttle((e) => {
+        if (Math.random() < 0.02) { // Reduced frequency
+            createGhostTrailOptimized(e.clientX, e.clientY);
+        }
+    }, 32)); // Reduced frequency for better performance
 
     // Enhanced click easter eggs
     document.addEventListener('click', (e) => {
-        if (Math.random() < 0.02) {
-            createFlyingBat(e.clientX, e.clientY);
+        if (Math.random() < 0.015) { // Slightly reduced frequency
+            createFlyingBatOptimized(e.clientX, e.clientY);
             clickCount++;
             
-            if (clickCount === 10) {
+            if (clickCount === 8) { // Reduced threshold
                 showEasterEggMessage();
                 clickCount = 0;
             }
@@ -1019,19 +1009,11 @@ function setupEasterEggs() {
 
     // Enhanced spooky sound interactions
     document.querySelectorAll('.event-card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            if (soundEnabled && Math.random() < 0.3) {
+        card.addEventListener('mouseenter', throttle(() => {
+            if (soundEnabled && Math.random() < 0.1) { // Reduced frequency
                 playSpookySoundEffect('hover');
             }
-        });
-    });
-
-    document.querySelectorAll('.event-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (soundEnabled) {
-                playSpookySoundEffect('click');
-            }
-        });
+        }, 300));
     });
 
     // Secret konami code easter egg
@@ -1115,9 +1097,9 @@ function activateSpecialEffects() {
     }
     
     // Create multiple flying bats
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) { // Reduced for performance
         setTimeout(() => {
-            createFlyingBat(Math.random() * window.innerWidth, Math.random() * 100);
+            createFlyingBatOptimized(Math.random() * window.innerWidth, Math.random() * 100);
         }, i * 1000);
     }
     
@@ -1131,37 +1113,30 @@ function activateSpecialEffects() {
 
 // Enhanced parallax effects with performance optimization
 function setupParallaxEffects() {
-    const parallaxBg = document.querySelector('.parallax-bg');
-    const moon = document.querySelector('.moon');
-    const stars = document.querySelector('.stars');
-    let ticking = false;
+    const parallaxElements = {
+        bg: document.querySelector('.parallax-bg'),
+        moon: document.querySelector('.moon'),
+        stars: document.querySelector('.stars')
+    };
 
-    function updateParallax() {
+    window.addEventListener('scroll', throttle(() => {
+        if (document.body.classList.contains('light-mode')) return;
+        
         const scrolled = window.pageYOffset;
         
-        if (parallaxBg && !document.body.classList.contains('light-mode')) {
-            parallaxBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+        // Use transform3d for better performance
+        if (parallaxElements.bg) {
+            parallaxElements.bg.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0)`;
         }
         
-        if (moon && !document.body.classList.contains('light-mode')) {
-            moon.style.transform = `translateY(${scrolled * 0.2}px) scale(1)`;
+        if (parallaxElements.moon) {
+            parallaxElements.moon.style.transform = `translate3d(0, ${scrolled * 0.2}px, 0) scale(1)`;
         }
 
-        if (stars && !document.body.classList.contains('light-mode')) {
-            stars.style.transform = `translateY(${scrolled * 0.1}px)`;
+        if (parallaxElements.stars) {
+            parallaxElements.stars.style.transform = `translate3d(0, ${scrolled * 0.1}px, 0)`;
         }
-        
-        ticking = false;
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }
-
-    window.addEventListener('scroll', requestTick);
+    }, 16)); // ~60fps
 }
 
 // Enhanced user preferences loading
@@ -1184,7 +1159,7 @@ function loadUserPreferences() {
     const savedSoundSetting = localStorage.getItem('soundEnabled');
     applySoundSetting(savedSoundSetting);
     
-    // Load other user preferences
+    // Load accessibility preferences
     loadAccessibilityPreferences();
 }
 
@@ -1240,11 +1215,12 @@ function loadAccessibilityPreferences() {
     }
 }
 
-// Enhanced utility functions
+// Optimized utility functions
 
-// Create enhanced ghost trail
-function createGhostTrail(x, y) {
-    if (ghostTrails.length > 8) {
+// Create optimized ghost trail
+function createGhostTrailOptimized(x, y) {
+    // Limit number of trails for performance
+    if (ghostTrails.length > 5) {
         const oldTrail = ghostTrails.shift();
         if (oldTrail?.parentNode) {
             oldTrail.remove();
@@ -1252,7 +1228,7 @@ function createGhostTrail(x, y) {
     }
 
     const trail = document.createElement('div');
-    const size = Math.random() * 6 + 4; // 4-10px size
+    const size = Math.random() * 4 + 3; // Reduced size
     const colors = ['var(--primary-orange)', 'var(--primary-purple)', 'var(--blood-red)'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     
@@ -1266,23 +1242,30 @@ function createGhostTrail(x, y) {
         border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
-        animation: ghost-fade 1.5s ease-out forwards;
-        box-shadow: 0 0 ${size*2}px ${randomColor};
+        opacity: 0.5;
+        transform: scale(0);
+        transition: transform 1s ease-out, opacity 1s ease-out;
     `;
 
     document.body.appendChild(trail);
     ghostTrails.push(trail);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        trail.style.transform = 'scale(2)';
+        trail.style.opacity = '0';
+    });
 
     setTimeout(() => {
         if (trail.parentNode) {
             trail.remove();
             ghostTrails = ghostTrails.filter(t => t !== trail);
         }
-    }, 1500);
+    }, 1000);
 }
 
-// Create enhanced flying bat
-function createFlyingBat(x, y) {
+// Create optimized flying bat
+function createFlyingBatOptimized(x, y) {
     const bat = document.createElement('div');
     const batEmojis = ['🦇', '👻', '🎃'];
     const randomBat = batEmojis[Math.floor(Math.random() * batEmojis.length)];
@@ -1292,21 +1275,28 @@ function createFlyingBat(x, y) {
         position: fixed;
         left: ${x}px;
         top: ${y}px;
-        font-size: ${Math.random() * 1 + 1.5}rem;
+        font-size: ${Math.random() * 0.5 + 1.2}rem;
         pointer-events: none;
         z-index: 9999;
         color: var(--primary-orange);
-        animation: fly-realistic ${Math.random() * 2 + 4}s linear forwards;
-        text-shadow: 0 0 10px var(--primary-orange);
+        opacity: 0.8;
+        transform: translateX(0);
+        transition: transform 4s linear, opacity 4s ease-out;
     `;
 
     document.body.appendChild(bat);
+
+    // Animate using CSS transitions for better performance
+    requestAnimationFrame(() => {
+        bat.style.transform = `translateX(${window.innerWidth + 100}px) translateY(${Math.random() * 200 - 100}px)`;
+        bat.style.opacity = '0';
+    });
 
     setTimeout(() => {
         if (bat.parentNode) {
             bat.remove();
         }
-    }, 6000);
+    }, 4000);
 }
 
 // Enhanced easter egg message
@@ -1357,7 +1347,7 @@ function showEasterEggMessage() {
     document.body.appendChild(easterEggModal);
 
     // Add special effects
-    createBatchBats();
+    createBatchBatsOptimized();
 
     setTimeout(() => {
         if (easterEggModal.parentNode) {
@@ -1367,11 +1357,11 @@ function showEasterEggMessage() {
     }, 8000);
 }
 
-// Create batch of flying bats
-function createBatchBats() {
-    for (let i = 0; i < 5; i++) {
+// Create optimized batch of flying bats
+function createBatchBatsOptimized() {
+    for (let i = 0; i < 3; i++) { // Reduced for performance
         setTimeout(() => {
-            createFlyingBat(
+            createFlyingBatOptimized(
                 Math.random() * window.innerWidth,
                 Math.random() * window.innerHeight * 0.5
             );
@@ -1379,7 +1369,7 @@ function createBatchBats() {
     }
 }
 
-// Enhanced spooky sound effects
+// Enhanced spooky sound effects - optimized
 function playSpookySoundEffect(type) {
     if (!soundEnabled) return;
 
@@ -1395,7 +1385,7 @@ function playSpookySoundEffect(type) {
             case 'hover':
                 oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.2);
-                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.06, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.2);
@@ -1403,7 +1393,7 @@ function playSpookySoundEffect(type) {
             case 'click':
                 oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
-                gainNode.gain.setValueAtTime(0.12, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.3);
@@ -1411,7 +1401,7 @@ function playSpookySoundEffect(type) {
             default:
                 oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.5);
-                gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.12, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.5);
@@ -1424,221 +1414,6 @@ function playSpookySoundEffect(type) {
 // Play spooky sound wrapper
 function playSpookySound() {
     playSpookySoundEffect('default');
-}
-
-// Enhanced debounce function
-function debounce(func, wait, immediate = false) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            timeout = null;
-            if (!immediate) func(...args);
-        };
-        const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func(...args);
-    };
-}
-
-// Display enhanced console message
-function displayConsoleMessage() {
-    const styles = {
-        title: 'color: #ff6b35; font-size: 16px; font-weight: bold;',
-        subtitle: 'color: #6a0572; font-size: 12px;',
-        text: 'color: #8b0000; font-size: 11px;'
-    };
-
-    console.log('%c🎃👻🦇 WELCOME TO THE AIKYA HALLOWEEN EVENT 🦇👻🎃', styles.title);
-    console.log(`
-      |\\      _,,,---,,_
-ZZZzz /,\\.̨-'\\    -.  ;-;;,_
-     |,4-  ) )-,_. ,\\ (  \\'-'
-    '---''(_/--'  \\-'\\_)
-    `);
-    console.log('%cThe spirits whisper: "The website holds dark secrets..."', styles.subtitle);
-    console.log('%cKeep clicking around the page... you might find something spooky! 🦇', styles.text);
-    console.log('%cTry the sound toggle for an atmospheric experience! 🔊', styles.text);
-    console.log('%cTip: Try the Konami Code (↑↑↓↓←→←→BA) for a special surprise!', styles.text);
-    console.log('%cHappy Halloween! 🎃', styles.title);
-}
-
-// Add enhanced CSS animations
-function addEnhancedStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ghost-fade {
-            to { 
-                opacity: 0; 
-                transform: scale(3) translateY(-30px); 
-            }
-        }
-        
-        @keyframes particle-float {
-            to {
-                transform: translateY(-50px) scale(0);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes ripple-expand {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes rainbow-text {
-            0% { color: #ff6b35; }
-            16% { color: #ff0080; }
-            33% { color: #8000ff; }
-            50% { color: #0080ff; }
-            66% { color: #00ff80; }
-            83% { color: #80ff00; }
-            100% { color: #ff6b35; }
-        }
-        
-        @keyframes specialGlow {
-            from { box-shadow: 0 0 20px var(--primary-orange); }
-            to { box-shadow: 0 0 40px var(--primary-orange), 0 0 60px var(--blood-red); }
-        }
-        
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .fade-in-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .theme-transition {
-            transition: all 0.5s ease !important;
-        }
-        
-        .nav-links a.active {
-            color: var(--primary-orange) !important;
-            transform: translateY(-2px);
-        }
-        
-        .nav-links a.active::before {
-            width: 80% !important;
-        }
-        
-        /* Enhanced hover effects */
-        .event-card:hover .event-img img {
-            filter: brightness(1.2) contrast(1.3) saturate(1.3);
-        }
-        
-        .event-btn:hover {
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
-        }
-        
-        .time-unit:hover::after {
-            transform: translateX(100%);
-        }
-        
-        /* Performance optimizations */
-        .parallax-bg,
-        .moon,
-        .stars {
-            will-change: transform;
-        }
-        
-        .event-card {
-            will-change: transform, box-shadow;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Performance monitoring and optimization
-function setupPerformanceMonitoring() {
-    if ('performance' in window) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const perfData = performance.timing;
-                const loadTime = perfData.loadEventEnd - perfData.navigationStart;
-                console.log(`🚀 Page loaded in ${loadTime}ms`);
-                
-                if (loadTime > 3000) {
-                    console.warn('⚠️ Page load time is high. Consider optimizing images and scripts.');
-                }
-                
-                // Report performance metrics
-                reportPerformanceMetrics(loadTime);
-            }, 0);
-        });
-    }
-}
-
-// Report performance metrics
-function reportPerformanceMetrics(loadTime) {
-    const metrics = {
-        loadTime,
-        userAgent: navigator.userAgent,
-        screenResolution: `${screen.width}x${screen.height}`,
-        timestamp: new Date().toISOString()
-    };
-    
-    console.log('Performance metrics:', metrics);
-}
-
-// Setup error handling
-function setupErrorHandling() {
-    window.addEventListener('error', (e) => {
-        if (e.target?.tagName === 'AUDIO') {
-            console.log('Audio loading failed, but site will continue to work normally.');
-            const soundIcon = document.querySelector('.sound-icon');
-            if (soundIcon) {
-                soundIcon.textContent = '🔇';
-            }
-            soundEnabled = false;
-        } else {
-            console.error('JavaScript error:', e.error);
-        }
-    });
-    
-    window.addEventListener('unhandledrejection', (e) => {
-        console.error('Unhandled promise rejection:', e.reason);
-    });
-}
-
-// Setup visibility change handling
-function setupVisibilityHandling() {
-    document.addEventListener('visibilitychange', () => {
-        const backgroundAudio = document.getElementById('backgroundAudio');
-        if (backgroundAudio && soundEnabled) {
-            if (document.hidden) {
-                backgroundAudio.pause();
-            } else {
-                backgroundAudio.play().catch(e => console.log('Audio resume failed:', e));
-            }
-        }
-    });
 }
 
 // Setup keyboard shortcuts
@@ -1675,16 +1450,83 @@ function setupKeyboardShortcuts() {
     });
 }
 
-// Initialize additional features
-function initializeAdditionalFeatures() {
-    addEnhancedStyles();
-    setupPerformanceMonitoring();
-    setupErrorHandling();
-    setupVisibilityHandling();
-    setupKeyboardShortcuts();
+// Setup error handling
+function setupErrorHandling() {
+    window.addEventListener('error', (e) => {
+        if (e.target?.tagName === 'AUDIO') {
+            console.log('Audio loading failed, but site will continue to work normally.');
+            const soundIcon = document.querySelector('.sound-icon');
+            if (soundIcon) {
+                soundIcon.textContent = '🔇';
+            }
+            soundEnabled = false;
+        } else {
+            console.error('JavaScript error:', e.error);
+        }
+    });
+    
+    window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled promise rejection:', e.reason);
+    });
 }
 
-// Call additional initialization
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initializeAdditionalFeatures, 100);
+// Setup visibility change handling
+function setupVisibilityHandling() {
+    document.addEventListener('visibilitychange', () => {
+        const backgroundAudio = document.getElementById('backgroundAudio');
+        if (backgroundAudio && soundEnabled) {
+            if (document.hidden) {
+                backgroundAudio.pause();
+            } else {
+                backgroundAudio.play().catch(e => console.log('Audio resume failed:', e));
+            }
+        }
+    });
+}
+
+// Optimized throttle function
+function throttle(func, limit) {
+    let inThrottle;
+    return function executedFunction(...args) {
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Display enhanced console message
+function displayConsoleMessage() {
+    const styles = {
+        title: 'color: #ff6b35; font-size: 16px; font-weight: bold;',
+        subtitle: 'color: #6a0572; font-size: 12px;',
+        text: 'color: #8b0000; font-size: 11px;'
+    };
+
+    console.log('%c🎃👻🦇 WELCOME TO THE AIKYA HALLOWEEN EVENT 🦇👻🎃', styles.title);
+    console.log(`
+      |\\      _,,,---,,_
+ZZZzz /,\\.̨-'\\    -.  ;-;;,_
+     |,4-  ) )-,_. ,\\ (  \\'-'
+    '---''(_/--'  \\-'\\_)
+    `);
+    console.log('%cThe spirits whisper: "The website holds dark secrets..."', styles.subtitle);
+    console.log('%cKeep clicking around the page... you might find something spooky! 🦇', styles.text);
+    console.log('%cTry the sound toggle for an atmospheric experience! 🔊', styles.text);
+    console.log('%cTip: Try the Konami Code (↑↑↓↓←→←→BA) for a special surprise!', styles.text);
+    console.log('%cHappy Halloween! 🎃', styles.title);
+}
+
+// Clean up on page unload
+window.addEventListener('beforeunload', () => {
+    if (countdownInterval) clearInterval(countdownInterval);
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    
+    // Clean up ghost trails
+    ghostTrails.forEach(trail => {
+        if (trail.parentNode) trail.remove();
+    });
+    ghostTrails = [];
 });

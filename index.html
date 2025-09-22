@@ -11,13 +11,22 @@
     <meta property="og:description" content="Join us for the most spine-chilling night of the year with costume contests, haunted experiences, and Halloween entertainment.">
     <meta property="og:type" content="website">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Optimized with display=swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Critical CSS - Inline for better performance -->
+    <style>
+        /* Critical above-the-fold styles */
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #ffffff; margin: 0; }
+        .loading-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050505; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(15px); padding: 1rem 0; z-index: 9999; }
+    </style>
+    
+    <!-- Custom CSS - Loaded async -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
     
     <!-- Mobile optimization meta tags -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -33,16 +42,16 @@
     </div>
 
     <!-- Parallax Background -->
-<div class="parallax-bg"></div>
-<div class="moon" id="moon"></div>
-<div class="stars"></div>
+    <div class="parallax-bg"></div>
+    <div class="moon" id="moon"></div>
+    <div class="stars"></div>
 
-<div class="flying-bats">
-    <span class="bat">🦇</span>
-    <span class="bat">🦇</span>
-    <span class="bat">🦇</span>
-    <span class="bat">🦇</span>
-</div>
+    <div class="flying-bats">
+        <span class="bat">🦇</span>
+        <span class="bat">🦇</span>
+        <span class="bat">🦇</span>
+        <span class="bat">🦇</span>
+    </div>
 
     <!-- Creepy images for light mode -->
     <div class="creepy-images" id="creepyImages">
@@ -53,12 +62,12 @@
         <div class="creepy-img" style="bottom: 20%; left: 30%; animation-delay: 3s;">🔮</div>
     </div>
 
-    <!-- Navigation - Fixed for mobile stability -->
+    <!-- Navigation -->
     <nav id="navbar" class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
                 <div class="logo-img">
-                    <img src="asserts/Adobe Express - file.webp" alt="Aikya Club Logo">
+                    <img src="asserts/Adobe Express - file.webp" alt="Aikya Club Logo" loading="lazy">
                 </div>
                 <span class="logo-text">Aikya Club</span>
             </a>
@@ -83,29 +92,25 @@
             <h1 class="main-title">THE CURSE AWAKENS</h1>
             <p class="subtitle">The haunting begins in the morning… will you survive till nightfall?</p>
             
-            <!-- Fixed countdown container with proper glow transitions -->
+            <!-- Countdown container -->
             <div class="countdown-container">
                 <h3 class="countdown-title">The Curse Awakens In...</h3>
                 <div class="countdown-timer" id="countdownTimer">
                     <div class="time-unit">
                         <span class="time-number" id="days">00</span>
                         <span class="time-label">Days</span>
-                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="hours">00</span>
                         <span class="time-label">Hours</span>
-                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="minutes">00</span>
                         <span class="time-label">Minutes</span>
-                        <div class="time-glow"></div>
                     </div>
                     <div class="time-unit">
                         <span class="time-number" id="seconds">00</span>
                         <span class="time-label">Seconds</span>
-                        <div class="time-glow"></div>
                     </div>
                 </div>
             </div>
@@ -128,7 +133,7 @@
 
                 <div class="event-card" data-event="treasure-hunt">
                     <div class="event-img">
-                        <img src="asserts/TreasureHunt.webp" alt="Treasure Hunt">
+                        <img src="asserts/TreasureHunt.webp" alt="Treasure Hunt" loading="lazy">
                     </div>
                     <h3 class="event-title">Treasure Hunt</h3>
                     <div class="event-details">
@@ -141,7 +146,7 @@
                 
                 <div class="event-card" data-event="valorant-knockout">
                     <div class="event-img">
-                        <img src="asserts/Valvo.webp" alt="Valorant Knockout">
+                        <img src="asserts/Valvo.webp" alt="Valorant Knockout" loading="lazy">
                     </div>
                     <h3 class="event-title">Valorant Knockout</h3>
                     <div class="event-details">
@@ -154,7 +159,7 @@
 
                 <div class="event-card" data-event="potion-matching">
                     <div class="event-img">
-                        <img src="asserts/potionMatching.webp" alt="Potion Matching">
+                        <img src="asserts/potionMatching.webp" alt="Potion Matching" loading="lazy">
                     </div>
                     <h3 class="event-title">Potion Matching</h3>
                     <div class="event-details">
@@ -167,7 +172,7 @@
                 
                 <div class="event-card" data-event="blindfolded-typing">
                     <div class="event-img">
-                        <img src="asserts/BlindTyping.webp" alt="Blindfolded Typing">
+                        <img src="asserts/BlindTyping.webp" alt="Blindfolded Typing" loading="lazy">
                     </div>
                     <h3 class="event-title">Blindfolded Typing Test</h3>
                     <div class="event-details">
@@ -180,12 +185,12 @@
 
                 <div class="event-card" data-event="movie-day-one">
                     <div class="event-img">
-                        <img src="asserts/Movie.webp" alt="Movie">
+                        <img src="asserts/Movie.webp" alt="Movie" loading="lazy">
                     </div>
                     <h3 class="event-title">Movie Day 1</h3>
                     <div class="event-details">
                         <p class="event-time">11:00 AM - 1:30 PM</p>
-                        <p class="event-prize">Popcorn’s Ready – Are You?</p>
+                        <p class="event-prize">Popcorn's Ready – Are You?</p>
                         <p class="event-description">Grab some popcorn and enjoy the show with friends.</p>
                     </div>
                     <button class="event-btn">More details</button>
@@ -193,7 +198,7 @@
                 
                 <div class="event-card" data-event="memory-game">
                     <div class="event-img">
-                        <img src="asserts/Mindgame.webp" alt="Memory Game">
+                        <img src="asserts/Mindgame.webp" alt="Memory Game" loading="lazy">
                     </div>
                     <h3 class="event-title">Memory Game</h3>
                     <div class="event-details">
@@ -206,7 +211,7 @@
 
                 <div class="event-card" data-event="poster-making">
                     <div class="event-img">
-                        <img src="asserts/PosterMaking.webp" alt="Poster Making">
+                        <img src="asserts/PosterMaking.webp" alt="Poster Making" loading="lazy">
                     </div>
                     <h3 class="event-title">Poster Making</h3>
                     <div class="event-details">
@@ -219,7 +224,7 @@
 
                 <div class="event-card" data-event="costume-party">
                     <div class="event-img">
-                        <img src="asserts/Costume.webp" alt="Costume Party">
+                        <img src="asserts/Costume.webp" alt="Costume Party" loading="lazy">
                     </div>
                     <h3 class="event-title">Costume Party</h3>
                     <div class="event-details">
@@ -237,7 +242,7 @@
 
                 <div class="event-card" data-event="valorant-finals">
                     <div class="event-img">
-                        <img src="asserts/ValoFinal.webp" alt="Valorant Finals">
+                        <img src="asserts/ValoFinal.webp" alt="Valorant Finals" loading="lazy">
                     </div>
                     <h3 class="event-title">Valorant Finals</h3>
                     <div class="event-details">
@@ -250,7 +255,7 @@
 
                 <div class="event-card" data-event="movie-trivia">
                     <div class="event-img">
-                        <img src="asserts/MovieThrival.webp" alt="Movie Trivia">
+                        <img src="asserts/MovieThrival.webp" alt="Movie Trivia" loading="lazy">
                     </div>
                     <h3 class="event-title">Movie Trivia</h3>
                     <div class="event-details">
@@ -263,7 +268,7 @@
 
                 <div class="event-card" data-event="quidditch-game">
                     <div class="event-img">
-                        <img src="asserts/Qudditch.webp" alt="Quidditch Game">
+                        <img src="asserts/Qudditch.webp" alt="Quidditch Game" loading="lazy">
                     </div>
                     <h3 class="event-title">Quidditch Game</h3>
                     <div class="event-details">
@@ -276,7 +281,7 @@
 
                 <div class="event-card" data-event="relay-games">
                     <div class="event-img">
-                        <img src="asserts/RelayGame.webp" alt="Relay Games">
+                        <img src="asserts/RelayGame.webp" alt="Relay Games" loading="lazy">
                     </div>
                     <h3 class="event-title">Relay Games</h3>
                     <div class="event-details">
@@ -289,12 +294,12 @@
 
                 <div class="event-card" data-event="movie-day-two">
                     <div class="event-img">
-                        <img src="asserts/Movie.webp" alt="Movie">
+                        <img src="asserts/Movie.webp" alt="Movie" loading="lazy">
                     </div>
                     <h3 class="event-title">Movie Day 2</h3>
                     <div class="event-details">
                         <p class="event-time">11:00 AM - 1:30 PM</p>
-                        <p class="event-prize">Popcorn’s Ready – Are You?</p>
+                        <p class="event-prize">Popcorn's Ready – Are You?</p>
                         <p class="event-description">Grab some popcorn and enjoy the show with friends.</p>
                     </div>
                     <button class="event-btn">More Details</button>
@@ -302,7 +307,7 @@
 
                 <div class="event-card" data-event="escape-room-day-two">
                     <div class="event-img">
-                        <img src="asserts/EscapeRoom.webp" alt="Escape Room">
+                        <img src="asserts/EscapeRoom.webp" alt="Escape Room" loading="lazy">
                     </div>
                     <h3 class="event-title">Escape Room</h3>
                     <div class="event-details">
@@ -416,7 +421,7 @@
         </div>
     </footer>
 
-    <!-- Fixed Floating Elements - Mobile stable -->
+    <!-- Fixed Floating Elements -->
     <a href="#contact" class="floating-cta" id="floatingCTA">
         <span class="floating-icon">🎃</span>
         <span class="floating-text">Join</span>
@@ -425,29 +430,24 @@
         <span class="scroll-icon">↑</span>
     </button>
 
-    <!-- Modal with improved mobile handling -->
+    <!-- Modal -->
     <div id="eventModal" class="modal">
-    <div class="modal-content">
-        <button class="modal-close" aria-label="Close modal">&times;</button>
-        <h2 id="modalTitle" class="modal-title">Event Details</h2>
-
-        <div id="modalContent" class="modal-body">
-            <!-- Modal content will be dynamically filled -->
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <h2 id="modalTitle" class="modal-title">Event Details</h2>
+            <div id="modalContent" class="modal-body">
+                <!-- Modal content will be dynamically filled -->
+            </div>
+            <button class="modal-btn">Click for Registration</button>
         </div>
-
-        <!-- Button stays outside modalContent -->
-        <button class="modal-btn">Click for Registration</button>
     </div>
-</div>
-
 
     <!-- Audio elements (hidden) -->
     <audio id="backgroundAudio" loop preload="none">
         <source src="asserts/Horror.mp3" type="audio/mpeg">
-        <!-- Fallback for browsers that don't support audio -->
     </audio>
 
-    <!-- Custom JavaScript -->
-    <script src="script.js"></script>
+    <!-- Custom JavaScript - Loaded with defer for better performance -->
+    <script src="script.js" defer></script>
 </body>
 </html>
