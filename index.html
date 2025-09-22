@@ -448,6 +448,27 @@
     </audio>
 
     <!-- Custom JavaScript - Loaded with defer for better performance -->
+     <script>
+// Temporary debugging script - remove after fixing
+window.addEventListener('load', function() {
+    console.log('Page loaded');
+    console.log('Event cards found:', document.querySelectorAll('.event-card').length);
+    console.log('Events grids found:', document.querySelectorAll('.events-grid').length);
+    console.log('Window width:', window.innerWidth);
+    
+    // Force show everything on mobile
+    if (window.innerWidth <= 768) {
+        const cards = document.querySelectorAll('.event-card');
+        console.log('Applying mobile fixes to', cards.length, 'cards');
+        cards.forEach((card, i) => {
+            card.style.display = 'block !important';
+            card.style.visibility = 'visible !important';
+            card.style.opacity = '1 !important';
+            console.log('Fixed card', i+1);
+        });
+    }
+});
+</script>
     <script src="script.js" defer></script>
 </body>
 </html>

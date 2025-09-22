@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize all website functionality
 function initializeWebsite() {
+    applyMobileCSSFixes();
     setupLoadingScreen();
     setupCountdownTimer();
     setupNavigation();
@@ -47,6 +48,59 @@ function initializeWebsite() {
     setupKeyboardShortcuts();
     setupVisibilityHandling();
     setupErrorHandling();
+
+    // Add this at the very end of initializeWebsite()
+    if (window.innerWidth <= 768) {
+        // Force mobile fixes after everything else loads
+        setTimeout(() => {
+            const eventCards = document.querySelectorAll('.event-card');
+            eventCards.forEach(card => {
+                card.style.display = 'block';
+                card.style.visibility = 'visible';
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+            });
+            
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.opacity = '1';
+                section.style.transform = 'none';
+            });
+        }, 500);
+    }
+}
+
+// Mobile-specific fixes - Add this at the very top of script.js
+function applyMobileCSSFixes() {
+    const style = document.createElement('style');
+    style.id = 'mobile-fixes';
+    style.textContent = `
+        @media (max-width: 768px) {
+            .events-grid {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+                width: 100% !important;
+                margin: 2rem 0 !important;
+            }
+            
+            .event-card {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                width: 100% !important;
+                max-width: none !important;
+                transform: none !important;
+                animation: none !important;
+            }
+            
+            .section {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Loading Screen
@@ -877,6 +931,17 @@ function smoothScrollToElement(target) {
 
 // Enhanced section reveal animations with stagger effect - optimized
 function setupSectionAnimations() {
+    // Skip animations on mobile for better performance and reliability
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.add('visible');
+            section.style.opacity = '1';
+            section.style.transform = 'none';
+        });
+        return;
+    }
+    
+    // Original animation code for desktop only
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -885,14 +950,12 @@ function setupSectionAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                // Use requestAnimationFrame for better performance
                 requestAnimationFrame(() => {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
-                        animateElementChildrenOptimized(entry.target);
-                    }, index * 50); // Reduced delay
+                    }, index * 50);
                 });
-                observer.unobserve(entry.target); // Stop observing once visible
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
