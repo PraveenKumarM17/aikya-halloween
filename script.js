@@ -531,11 +531,10 @@ function setupModalSystem() {
                     'Rule violations lead to disqualification'
                 ],
                 requirements: [
-                    "Participants are required to carry their **OWN LAPTOPS, CHARGER, MOUSE, HEADSET**",
-                    "**Ethernet Connection** will be **provided** (Laptops without **Ethernet Jack** are **not recommended**, **WIFI connection is Slow**)",
-                    "**Valorant** should be **UPDATED** before the match"
-                    ],
-
+                    "Participants are required to carry their <b>OWN LAPTOPS, CHARGER, MOUSE, HEADSET</b>",
+                    "<b>Ethernet Connection</b> will be <b>provided</b> (Laptops without <b>Ethernet Jack</b> are <b>not recommended</b>, <b>WIFI connection is Slow</b>)",
+                    "<b>Valorant</b> should be <b>UPDATED</b> before the match"
+                ],
                 venue : 'IT Block - 208 Labs'
             })
         },
