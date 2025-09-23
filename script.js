@@ -645,7 +645,7 @@ function setupModalSystem() {
         },
         'relay-games': {
             title: '🏃‍♂️ Relay Games',
-            registrationLink : 'https://forms.gle/71qkstAYBKrjrcbF6',
+            registrationLink : 'https://forms.gle/sDVas3T582hpT4Ck8',
             content: generateEventContent('Team Relay Challenge', {
                 time: '10:30 AM - 12:00 PM',
                 prize: '₹1000',
